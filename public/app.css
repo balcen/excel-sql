@@ -1,0 +1,129 @@
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans+TC:400,700|Source+Sans+Pro:400,600&display=swap&subset=chinese-traditional');
+
+body {
+    font-family: "Noto Sans TC", "Source Sans Pro", sans-serif !important;
+}
+
+img {
+    width: auto;
+    height: 70px;
+}
+
+.table tbody td, .table > thead > tr > th{
+    vertical-align: middle;
+}
+
+#delete-edit {
+    width: 0;
+    height: 100%;
+    opacity: 0;
+    transition: all 0.3s linear;
+    top: 0;
+    left: 0;
+}
+
+#delete-edit > form {
+    left: 0px;
+    top: 0px;
+    height: 100%;
+}
+
+.table tr:hover #delete-edit {
+    opacity: 1;
+}
+
+#edit-form {
+    width: 0;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Make Input Search Style Same */
+#search-input input[type="search"] {
+    -webkit-appearance: textfield;
+    -webkit-box-sizing: content-box;
+}
+
+#search-input input::-webkit-search-decoration,
+#search-input input::-webkit-search-cancel-button {
+    display: none;
+}
+
+/* Search Bar */
+#search-input {
+    font: 90%/180% Arial, Helvetica, sans-serif;
+}
+
+#search-input input {
+    outline: none;
+}
+
+#search-input input[type="search"] {
+    background: #fff url(https://static.tumblr.com/ftv85bp/MIXmud4tx/search-icon.png) no-repeat 9px center;
+    width: 15px;
+    color: transparent;
+    border: none;
+    padding: 9px 10px 9px 10px;
+    cursor: pointer;
+
+    -webkit-border-radius: 10em;
+    -moz-border-radius: 10em;
+    border-radius: 10em;
+
+    -webkit-transition: all .5s;
+    -moz-transition: all .5s;
+    transition: all .5s;
+
+    line-height: normal;
+}
+
+#search-input input[type="search"]:focus {
+    width: 200px;
+    padding-left: 32px;
+    color: #000;
+    background-color: #fff;
+    cursor: auto;
+
+    border-color: #428bca;
+    -webkit-box-shadow: 0 0 5px #4280ca;
+    -moz-box-shadow: 0 0 5px #4280ca;
+    box-shadow: 0 0 5px #4280ca;
+}
+
+#search-input input[type="search"]:hover {
+    background-color: #fff;
+}
+
+#search-input ipnut:-moz-placeholder {
+    color: transparent;
+}
+
+#search-input input::-webkit-input-placeholder {
+    color: transparent;
+}
+
+/* Main Search Bar */
+#main-search select:focus {
+    z-index: 1;
+}
+
+#main-search-input {
+    padding-right: 2px;
+}
+
+#main-search-input input {
+    border: none;
+    outline: none;
+}
+
+#main-search-input:focus-within{
+    border: #80bdff;
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+}
+
+#main-search-input button {
+    margin: 6px 0;
+    border: none;
+    outline: none;
+    background-color: #fff;
+}
+
