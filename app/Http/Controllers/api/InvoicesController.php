@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api;
 
 use App\Invoice;
+
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -16,6 +17,7 @@ class InvoicesController extends Controller
     public function index()
     {
         $invoices = Invoice::all();
+
         return response()->json($invoices);
     }
 

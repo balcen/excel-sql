@@ -23,3 +23,5 @@ Route::resources([
     'orders' => 'api\OrdersController',
     'invoices' => 'api\InvoicesController'
 ]);
+
+Route::post('upload', 'api\UploadController@import');

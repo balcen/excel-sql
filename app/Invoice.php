@@ -26,4 +26,9 @@ class Invoice extends Model
         'author',
         'file_name'
     ];
+
+    protected $casts = [
+        'i_product_price' => 'decimal:4',
+        'i_amount' => 'decimal:4'
+    ];
 }

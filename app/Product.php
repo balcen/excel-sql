@@ -22,4 +22,9 @@ class Product extends Model
         'author',
         'file_name'
     ];
+
+    protected $casts = [
+        'p_price' => 'decimal:4',
+        'p_weight' => 'decimal:4',
+    ];
 }

@@ -24,4 +24,9 @@ class Order extends Model
         'author',
         'file_name'
     ];
+
+    protected $casts = [
+        'o_product_price' => 'decimal:4',
+        'o_amount' => 'decimal:4'
+    ]
 }
