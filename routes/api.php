@@ -25,3 +25,8 @@ Route::resources([
 ]);
 
 Route::post('upload', 'api\UploadController@import');
+
+Route::post('clients/upload', 'api\ClientsController@upload');
+Route::post('products/upload', 'api\ProductsController@upload');
+Route::post('orders/upload', 'api\OrdersController@upload');
+Route::post('bills/upload', 'api\BillsController@upload');

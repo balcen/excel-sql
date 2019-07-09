@@ -5,9 +5,11 @@ namespace App\Http\Controllers\api;
 use App\Product;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\ExcelFileUpload;
 
 class ProductsController extends Controller
 {
+    use ExcelFileUpload;
     /**
      * Display a listing of the resource.
      *
@@ -16,6 +18,7 @@ class ProductsController extends Controller
     public function index()
     {
         $products = Product::all();
+
         return response()->json($products);
     }
 
@@ -62,5 +65,17 @@ class ProductsController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function upload(Request $request)
+    {
+        $file = $request->file('file');
+        $type = $request->get('abbr');
+
+        $excelData = $this->getExcelData($file, $type);
+
+        $result = Product::insert($excelData);
+
+        return response()->json(['result'=>$result]);
     }
 }
