@@ -17,6 +17,7 @@ class ClientsController extends Controller
     public function index()
     {
         $clients = Client::all();
+
         return response()->json($clients);
     }
 
@@ -31,8 +32,8 @@ class ClientsController extends Controller
         $client = $request->all();
         $client['created_at'] = Carbon::now();
         $client['updated_at'] = Carbon::now();
-        $result = Clients::insert($client);
-        return response()->json(['result' => $result, 'status' => 'success']);
+        $result = Client::insert($client);
+        return response()->json(['result' => $result]);
     }
 
     /**
@@ -69,7 +70,7 @@ class ClientsController extends Controller
      */
     public function destroy($id)
     {
-        $result = Clients::find($id)->delete();
-        return response()->json(['result' => $result, 'status' => 'success']);
+        $result = Client::find($id)->delete();
+        return response()->json(['result' => $result]);
     }
 }

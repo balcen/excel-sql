@@ -62,6 +62,7 @@ class OrdersController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $result = Order::find($id)->delete();
+        return response()->json(['result' => $result]);
     }
 }

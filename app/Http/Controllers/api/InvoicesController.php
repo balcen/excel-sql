@@ -63,6 +63,7 @@ class InvoicesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $result = Invoice::find($id)->delete();
+        return response()->json(['result' => $result]);
     }
 }

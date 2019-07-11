@@ -24,7 +24,6 @@ class Product extends Model
     ];
 
     protected $casts = [
-        'p_price' => 'decimal:4',
-        'p_weight' => 'decimal:4',
+        'p_price' => 'double'
     ];
 }

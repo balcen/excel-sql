@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api;
 
 use App\Product;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\ExcelFileUpload;
@@ -30,7 +31,11 @@ class ProductsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $product = $request->all();
+        $product['created_at'] = Carbon::now();
+        $product['updated_at'] = Carbon::now();
+        $result = Product::insert($product);
+        return response()->json(['result'=>$result]);
     }
 
     /**
@@ -53,7 +58,9 @@ class ProductsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $product = $request->all();
+        $result = Product::find($id)->update($product);
+        return response()->json(['result'=>$result]);
     }
 
     /**
@@ -64,7 +71,8 @@ class ProductsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $result = Product::find($id)->delete();
+        return response()->json(['result' => $result]);
     }
 
     public function upload(Request $request)
