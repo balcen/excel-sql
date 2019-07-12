@@ -4,6 +4,7 @@ namespace App\Http\Controllers\api;
 
 use App\Order;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -28,7 +29,11 @@ class OrdersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $order = $request->all();
+        $order['created_at'] = Carbon::now();
+        $order['updated_at'] = Carbon::now();
+        $result = Order::insert($order);
+        return response()->json(['result'=>$result]);
     }
 
     /**
@@ -51,7 +56,9 @@ class OrdersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $order = $request->all();
+        $result = Order::find($id)->update($order);
+        return response()->json(['result'=>$result]);
     }
 
     /**

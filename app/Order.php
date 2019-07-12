@@ -26,7 +26,7 @@ class Order extends Model
     ];
 
     protected $casts = [
-        'o_product_price' => 'decimal:4',
-        'o_amount' => 'decimal:4'
+        'o_product_price' => 'double',
+        'o_amount' => 'double'
     ];
 }

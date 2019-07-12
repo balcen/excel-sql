@@ -88,8 +88,8 @@ trait ExcelFileUpload {
 
                 $this->excelData[$i][$headers[$j++]] = $cellValue;
             }
-            $this->excelData[$i]['created_at'] = Carbon::now();
-            $this->excelData[$i]['updated_at'] = Carbon::now();
+//            $this->excelData[$i]['created_at'] = Carbon::now();
+//            $this->excelData[$i]['updated_at'] = Carbon::now();
             $i++;
         }
     }

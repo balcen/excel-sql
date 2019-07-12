@@ -73,4 +73,12 @@ class ClientsController extends Controller
         $result = Client::find($id)->delete();
         return response()->json(['result' => $result]);
     }
+
+
+    public function deleteAll(Request $request)
+    {
+        $ids = array_column($request->all(), 'id');
+        $result = Client::whereIn('id', $ids)->delete();
+        return response()->json(['result'=>$result]);
+    }
 }

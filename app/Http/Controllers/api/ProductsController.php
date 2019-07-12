@@ -82,7 +82,7 @@ class ProductsController extends Controller
 
         $excelData = $this->getExcelData($file, $type);
 
-        $result = Product::insert($excelData);
+        $result = Product::updateOrInsert($excelData, $excelData);
 
         return response()->json(['result'=>$result]);
     }
