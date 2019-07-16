@@ -6,9 +6,11 @@ use App\Client;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\ExcelFileUpload;
 
 class ClientsController extends Controller
 {
+    use ExcelFileUpload;
     /**
      * Display a listing of the resource.
      *
@@ -77,8 +79,17 @@ class ClientsController extends Controller
 
     public function deleteAll(Request $request)
     {
-        $ids = array_column($request->all(), 'id');
+        $ids = explode(',', $request->ids);
         $result = Client::whereIn('id', $ids)->delete();
+        return response()->json(['result'=>$result]);
+    }
+
+    public function upload(Request $request)
+    {
+        $file['file'] = $request->file('file');
+        $file['fileName'] = $request->file('file')->getClientOriginalName();
+        $excelData = $this->getExcelData($file,'clients');
+        $result = Client::insert($excelData);
         return response()->json(['result'=>$result]);
     }
 }

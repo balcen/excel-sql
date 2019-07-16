@@ -7,9 +7,11 @@ use App\Invoice;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\ExcelFileUpload;
 
 class InvoicesController extends Controller
 {
+    use ExcelFileUpload;
     /**
      * Display a listing of the resource.
      *
@@ -72,5 +74,21 @@ class InvoicesController extends Controller
     {
         $result = Invoice::find($id)->delete();
         return response()->json(['result' => $result]);
+    }
+
+    public function deleteAll(Request $request)
+    {
+        $ids = explode(',', $request->ids);
+        $result = Invoice::whereIn('id', $ids)->delete();
+        return response()->json(['result'=>$result]);
+    }
+
+    public function upload(Request $request)
+    {
+        $file['file'] = $request->file('file');
+        $file['fileName'] = $request->file('file')->getClientOriginalName();
+        $excelData = $this->getExcelData($file, 'invoices');
+        $result = Invoice::insert($excelData);
+        return response()->json(['result'=>$result]);
     }
 }

@@ -7,6 +7,7 @@ use PhpOffice\PhpSpreadsheet\IOFactory;
 use Illuminate\Support\Facades\Storage;
 use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
 use PhpOffice\PhpSpreadsheet\RichText\RichText;
+use PhpOffice\PhpSpreadsheet\Shared\Date;
 use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
 use PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing;
 
@@ -14,16 +15,18 @@ use PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing;
 trait ExcelFileUpload {
     private $worksheet;
     private $excelData;
+    private $fileName;
     private $headers = [
-        'clients' => ['c_no', 'c_name', 'c_class', 'c_contact', 'c_phone', 'c_mail'],
+        'clients' => ['c_tax_id', 'c_name', 'c_type', 'c_contact', 'c_phone', 'c_mail'],
         'products' => ['p_type', 'p_name', 'p_part_no', 'p_spec', 'p_size', 'p_weight', 'p_price', 'p_note'],
-        'orders' => ['o_no', 'o_date', 'o_s_name', 'o_b_name', 'o_p_name', 'o_p_no', 'o_spec', 'o_price', 'o_currency', 'o_count', 'o_amount', 'o_note'],
-        'bills' => ['b_no', 'b_date', 'b_mature', 'b_o_no', 'b_s_name', 'b_b_name', 'b_p_name', 'b_p_no', 'b_spec', 'b_price', 'b_currency', 'b_count', 'b_amount', 'b_note']
+        'orders' => ['o_no', 'o_date', 'o_seller_name', 'o_buyer_name', 'o_product_name', 'o_product_part_no', 'o_product_spec', 'o_product_price', 'o_currency', 'o_quantity', 'o_amount', 'o_note'],
+        'invoices' => ['i_no', 'i_date', 'i_mature', 'i_order_no', 'i_seller_name', 'i_buyer_name', 'i_product_name', 'i_product_part_no', 'i_product_spec', 'i_product_price', 'i_currency', 'i_quantity', 'i_amount', 'i_note']
     ];
 
     public function getExcelData($file, $type)
     {
-        $this->worksheet = IOFactory::load($file)->getActiveSheet();
+        $this->fileName = $file['fileName'];
+        $this->worksheet = IOFactory::load($file['file'])->getActiveSheet();
         $this->getImage();
         $this->getRowData($type);
 
@@ -86,10 +89,27 @@ trait ExcelFileUpload {
                     $cellValue = $cellValue->getPlainText();
                 }
 
+                switch($type) {
+                case 'orders':
+                   if ($j > 11) break 2;
+                   if ($j === 1) $cellValue = Date::excelToDateTimeObject($cellValue);
+                   if ($j === 10) {
+                       $cellValue = $this->excelData[$i]['o_product_price'] * $this->excelData[$i]['o_quantity'];
+                   }
+                   break;
+                case 'invoices':
+                    // Excel 日期換成 php 日期
+                    if ($j === 1 || $j === 2) {
+                        $cellValue = Date::excelToDateTimeObject($cellValue);
+                    }
+                    break;
+                }
+
                 $this->excelData[$i][$headers[$j++]] = $cellValue;
             }
-//            $this->excelData[$i]['created_at'] = Carbon::now();
-//            $this->excelData[$i]['updated_at'] = Carbon::now();
+            $this->excelData[$i]['created_at'] = Carbon::now();
+            $this->excelData[$i]['updated_at'] = Carbon::now();
+            $this->excelData[$i]['file_name'] = $this->fileName;
             $i++;
         }
     }

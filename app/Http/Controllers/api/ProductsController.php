@@ -75,15 +75,19 @@ class ProductsController extends Controller
         return response()->json(['result' => $result]);
     }
 
+    public function deleteAll(Request $request)
+    {
+        $ids = explode(',', $request->ids);
+        $result = Product::whereIn('id', $ids)->delete();
+        return response()->json(['result'=>$result]);
+    }
+
     public function upload(Request $request)
     {
-        $file = $request->file('file');
-        $type = $request->get('abbr');
-
-        $excelData = $this->getExcelData($file, $type);
-
-        $result = Product::updateOrInsert($excelData, $excelData);
-
+        $file['file'] = $request->file('file');
+        $file['fileName'] = $request->file('file')->getClientOriginalName();
+        $excelData = $this->getExcelData($file, 'products');
+        $result = Product::insert($excelData, $excelData);
         return response()->json(['result'=>$result]);
     }
 }

@@ -12,9 +12,9 @@ class UploadController extends Controller
     private $dataType;
 
     public function import (Request $request) {
-        $this->worksheet = IOFactory::load($request->file('file'))->getActiveSheet()->toArray();
-        $arr = $this->arrayFilter($this->worksheet);
-        $length = count($arr);
+        $worksheet = IOFactory::load($request->file('file'))->getActiveSheet()->toArray();
+        $this->worksheet = $this->arrayFilter($worksheet);
+        $length = count($this->worksheet);
         $this->getDataType();
         return response()->json([ 'type' => $this->dataType, 'length' => $length -1 ]);
     }
@@ -32,7 +32,7 @@ class UploadController extends Controller
             $this->dataType = 'orders';
             break;
         case '14':
-            $this->dataType = 'bills';
+            $this->dataType = 'invoices';
             break;
         }
     }

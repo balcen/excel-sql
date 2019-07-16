@@ -20,7 +20,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::delete('clientsDeleteAll', 'api\ClientsController@deleteAll');
 Route::delete('productsDeleteAll', 'api\ProductsController@deleteAll');
 Route::delete('ordersDeleteAll', 'api\OrdersController@deleteAll');
-Route::delete('billsDeleteAll', 'api\BillsController@deleteAll');
+Route::delete('invoicesDeleteAll', 'api\InvoicesController@deleteAll');
 
 Route::resources([
     'clients' => 'api\ClientsController',
@@ -34,6 +34,6 @@ Route::post('upload', 'api\UploadController@import');
 Route::post('clients/upload', 'api\ClientsController@upload');
 Route::post('products/upload', 'api\ProductsController@upload');
 Route::post('orders/upload', 'api\OrdersController@upload');
-Route::post('bills/upload', 'api\BillsController@upload');
+Route::post('invoices/upload', 'api\InvoicesController@upload');
 
 
