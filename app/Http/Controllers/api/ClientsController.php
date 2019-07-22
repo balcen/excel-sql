@@ -11,6 +11,12 @@ use App\Http\Controllers\ExcelFileUpload;
 class ClientsController extends Controller
 {
     use ExcelFileUpload;
+
+    public function __construct()
+    {
+        $this->middleware('cors');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -19,7 +25,6 @@ class ClientsController extends Controller
     public function index()
     {
         $clients = Client::all();
-
         return response()->json($clients);
     }
 

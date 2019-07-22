@@ -12,6 +12,12 @@ use App\Http\Controllers\ExcelFileUpload;
 class InvoicesController extends Controller
 {
     use ExcelFileUpload;
+
+    public function __construct()
+    {
+        $this->middleware('cors');
+    }
+
     /**
      * Display a listing of the resource.
      *
