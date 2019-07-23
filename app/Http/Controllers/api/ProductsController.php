@@ -93,7 +93,6 @@ class ProductsController extends Controller
         $file['file'] = $request->file('file');
         $file['fileName'] = $request->file('file')->getClientOriginalName();
         $excelData = $this->getExcelData($file, 'products');
-        dd($excelData);
         $result = Product::insert($excelData);
         return response()->json(['result'=>$result]);
     }
