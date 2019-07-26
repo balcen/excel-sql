@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Staudenmeir\LaravelUpsert\Eloquent\HasUpsertQueries;
 
 class Product extends Model
 {
+    use HasUpsertQueries;
+
     protected $table = 'products';
 
     protected $fillable = [

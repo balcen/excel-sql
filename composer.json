@@ -17,7 +17,8 @@
     "laravel/framework": "5.8.*",
     "laravel/tinker": "^1.0",
     "maatwebsite/excel": "^3.1",
-    "recca0120/laravel-tracy": "v1.8.23"
+    "recca0120/laravel-tracy": "v1.8.23",
+    "staudenmeir/laravel-upsert": "^1.0"
   },
   "require-dev": {
       "beyondcode/laravel-dump-server": "^1.0",
