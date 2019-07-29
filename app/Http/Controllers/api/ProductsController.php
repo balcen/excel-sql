@@ -94,6 +94,6 @@ class ProductsController extends Controller
         $file['fileName'] = $request->file('file')->getClientOriginalName();
         $excelData = $this->getExcelData($file, 'products');
         Product::insertIgnore($excelData);
-        return response()->json(['result'=>$result]);
+        return response()->json(['result'=>'success']);
     }
 }
