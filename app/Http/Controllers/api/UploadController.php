@@ -8,32 +8,27 @@ use PhpOffice\PhpSpreadsheet\IOFactory;
 
 class UploadController extends Controller
 {
-    private $worksheet;
-    private $dataType;
-
     public function import (Request $request) {
         $worksheet = IOFactory::load($request->file('file'))->getActiveSheet()->toArray();
-        $this->worksheet = $this->arrayFilter($worksheet);
-        $length = count($this->worksheet);
-        $this->getDataType();
-        return response()->json([ 'type' => $this->dataType, 'length' => $length -1 ]);
+        $worksheet = $this->arrayFilter($worksheet);
+        $length = count($worksheet);
+        $type = $this->getDataType($this->worksheet);
+        return response()->json([ 'type' =>$type, 'length' => $length -1 ]);
     }
 
-    private function getDataType()
+    private function getDataType($worksheet)
     {
-        switch (count($this->worksheet[0])) {
+        switch (count($worksheet[0])) {
         case '6':
-            $this->dataType = 'clients';
-            break;
+            return 'clients';
         case '8':
-            $this->dataType = 'products';
-            break;
+            return 'products';
         case '12':
-            $this->dataType = 'orders';
-            break;
+            return 'orders';
         case '14':
-            $this->dataType = 'invoices';
-            break;
+            return 'invoices';
+        default:
+            return false;
         }
     }
 
