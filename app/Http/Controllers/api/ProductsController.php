@@ -42,14 +42,14 @@ class ProductsController extends Controller
         $product = json_decode($request->all()['item'], true);
         $product['created_at'] = Carbon::now();
         $product['updated_at'] = Carbon::now();
-        if(isset($image)) {
-            $image = $request->file('image');
-            $imageName = '00_Image_'.uniqid().'.'.$image->getClientOriginalExtension();
-            $imageContent = file_get_contents($image);
-            $product['p_image'] = $imageName;
-        }
+        // if(isset($image)) {
+        //     $image = $request->file('image');
+        //     $imageName = '00_Image_'.uniqid().'.'.$image->getClientOriginalExtension();
+        //     $imageContent = file_get_contents($image);
+        //     $product['p_image'] = $imageName;
+        // }
         $result = Product::insert($product);
-        Storage::disk('pubic')->put($imageName, $imageContent);
+        // Storage::disk('pubic')->put($imageName, $imageContent);
         return response()->json(['result'=>$result]);
     }
 
@@ -86,7 +86,9 @@ class ProductsController extends Controller
      */
     public function destroy($id)
     {
-        $result = Product::find($id)->delete();
+        $product = Product::find($id);
+        Storage::disk('public')->delete($product->value('p_image'));
+        $product->delete();
         return response()->json(['result' => $result]);
     }
 
