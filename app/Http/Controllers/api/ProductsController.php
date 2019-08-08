@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\ExcelFileUpload;
+use Illuminate\Support\Facades\Storage;
 
 class ProductsController extends Controller
 {
@@ -37,10 +38,18 @@ class ProductsController extends Controller
      */
     public function store(Request $request)
     {
-        $product = $request->all();
+        $image = $request->file('image');
+        $product = json_decode($request->all()['item'], true);
         $product['created_at'] = Carbon::now();
         $product['updated_at'] = Carbon::now();
+        if(isset($image)) {
+            $image = $request->file('image');
+            $imageName = '00_Image_'.uniqid().'.'.$image->getClientOriginalExtension();
+            $imageContent = file_get_contents($image);
+            $product['p_image'] = $imageName;
+        }
         $result = Product::insert($product);
+        Storage::disk('pubic')->put($imageName, $imageContent);
         return response()->json(['result'=>$result]);
     }
 
