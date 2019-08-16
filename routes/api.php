@@ -18,7 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 // Auth
-Route::post('register', 'api\AuthController@register');
+Route::post('auth/register', 'api\AuthController@register');
 
 Route::delete('clientsDeleteAll', 'api\ClientsController@deleteAll');
 Route::delete('productsDeleteAll', 'api\ProductsController@deleteAll');
