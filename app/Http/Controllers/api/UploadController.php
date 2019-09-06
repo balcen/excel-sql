@@ -12,7 +12,7 @@ class UploadController extends Controller
         $worksheet = IOFactory::load($request->file('file'))->getActiveSheet()->toArray();
         $worksheet = $this->arrayFilter($worksheet);
         $length = count($worksheet);
-        $type = $this->getDataType($this->worksheet);
+        $type = $this->getDataType($worksheet);
         return response()->json([ 'type' =>$type, 'length' => $length -1 ]);
     }
 

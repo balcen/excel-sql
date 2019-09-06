@@ -19,6 +19,12 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 // Auth
 Route::post('auth/register', 'api\AuthController@register');
+Route::middleware('jwt.auth')->group(function() {
+    Route::get('auth/user', 'api\AuthController@user');
+});
+Route::middleware('jwt.refresh')->group(function() {
+    Route::get('auth/refresh', 'api\AuthController@refresh');
+});
 
 Route::delete('clientsDeleteAll', 'api\ClientsController@deleteAll');
 Route::delete('productsDeleteAll', 'api\ProductsController@deleteAll');
