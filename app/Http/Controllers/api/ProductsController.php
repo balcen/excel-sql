@@ -87,11 +87,11 @@ class ProductsController extends Controller
     public function destroy($id)
     {
         $product = Product::find($id);
-        $image = $product->value('p_image');
-        if(isset($image)) {
+//        $image = $product->value('p_image');
+        if($image = $product->value('p_image')) {
             Storage::disk('public')->delete($product->value('p_image'));
         }
-        $product->delete();
+        $result = $product->delete();
         return response()->json(['result' => $result]);
     }
 
