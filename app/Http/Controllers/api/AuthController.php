@@ -7,55 +7,85 @@ use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use Tymon\JWTAuth\JWTAuth;
 
 class AuthController extends Controller
 {
     public function register(RegisterFormRequest $request)
     {
-        $user = new User;
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = bcrypt($request->password);
-        $user->save();
+        try {
+            $user = new User;
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->password = bcrypt($request->password);
+            $user->save();
+        } catch (\Exception $exception){
+            return response([
+                'status' => $exception
+            ]);
+        }
         return response([
             'status' => 'success',
             'data' => $user
         ], 200);
     }
 
-    public function login($request)
+    public function login(Request $request)
     {
-        $credential = $request->only('email', 'password');
+        $credentials = request(['name', 'password']);
 
         // attempt to verify the credential and create token for the user
-        if (!$token = JWTAuth::attempt($credential)) {
-            return response([
-                'status' => 'error',
-                'error' => 'invalid.credential',
-                'msg' => 'Invalid Credential'
-            ], 400);
+        if (! $token = auth('api')->attempt($credentials)) {
+            return response()->json(['error'=>'Unauthorized'], 401);
         }
 
-        //
-        return response(['status' => 'success'])
-            ->header('Authorization', $token);
+        return $this->respondWithToken($token);
     }
 
-    // checkout user info
-    public function user()
+    /**
+     * Get the authenticated User.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function me()
     {
-        $user = User::find(Auth::id());
-
-        return response([
-            'status' => 'success',
-            'data' => $user
-        ]);
+        return response()->json(auth()->user());
     }
 
-    // checkout token valid or not
+    /**
+     * Log the user out (Invalidate the token).
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function logout()
+    {
+        auth()->logout();
+
+        return response()->json(['message' => 'Successfully logged out']);
+    }
+
+    /**
+     * Refresh a token.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function refresh()
     {
-        return response(['status' => 'sueccess']);
+        return $this->respondWithToken(auth()->refresh());
+    }
+
+    /**
+     * Get the token array structure.
+     *
+     * @param  string $token
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    protected function respondWithToken($token)
+    {
+        return response()->json([
+            'access_token' => $token,
+            'token_type' => 'bearer',
+            'expires_in' => auth('api')->factory()->getTTL() * 60
+        ])->header('Authorization', $token);
     }
 }
