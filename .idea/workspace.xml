@@ -1,21 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b4612b22-e485-4c03-9353-35ec8388f4fa" name="Default Changelist" comment="修改ProductController錯誤">
-      <change beforePath="$PROJECT_DIR$/.idea/excel-data.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/excel-data.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+    <list default="true" id="b4612b22-e485-4c03-9353-35ec8388f4fa" name="Default Changelist" comment="jwt-auth 改成1.0.*版本">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Exceptions/Handler.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Exceptions/Handler.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/api/AuthController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/api/AuthController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Kernel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Kernel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/app.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/app.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/auth.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/auth.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/jwt.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/jwt.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/.htaccess" beforeDir="false" afterPath="$PROJECT_DIR$/public/.htaccess" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/api/UploadController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/api/UploadController.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -225,7 +215,13 @@
       <workItem from="1568683002464" duration="5633000" />
       <workItem from="1568878418268" duration="1332000" />
       <workItem from="1568969636838" duration="2145000" />
-      <workItem from="1569805907027" duration="20335000" />
+      <workItem from="1569805907027" duration="20439000" />
+      <workItem from="1569891839059" duration="6138000" />
+      <workItem from="1570172619581" duration="3642000" />
+      <workItem from="1570241207333" duration="7086000" />
+      <workItem from="1570410418362" duration="3493000" />
+      <workItem from="1570505337755" duration="3629000" />
+      <workItem from="1571119775152" duration="3253000" />
     </task>
     <task id="LOCAL-00001" summary="Client Product Modal Edit/New">
       <created>1562822714612</created>
@@ -255,7 +251,14 @@
       <option name="project" value="LOCAL" />
       <updated>1568095268182</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="jwt-auth 改成1.0.*版本">
+      <created>1569838152912</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1569838152912</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -284,6 +287,7 @@
     <MESSAGE value="Orders Invoices Dialog Edit/New" />
     <MESSAGE value="修改UploadController錯誤" />
     <MESSAGE value="修改ProductController錯誤" />
-    <option name="LAST_COMMIT_MESSAGE" value="修改ProductController錯誤" />
+    <MESSAGE value="jwt-auth 改成1.0.*版本" />
+    <option name="LAST_COMMIT_MESSAGE" value="jwt-auth 改成1.0.*版本" />
   </component>
 </project>

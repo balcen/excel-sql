@@ -13,7 +13,7 @@ class UploadController extends Controller
         $worksheet = $this->arrayFilter($worksheet);
         $length = count($worksheet);
         $type = $this->getDataType($worksheet);
-        return response()->json([ 'type' =>$type, 'length' => $length -1 ]);
+        return response()->json([ 'type' => $type, 'length' => $length -1, 'data' => $worksheet]);
     }
 
     private function getDataType($worksheet)

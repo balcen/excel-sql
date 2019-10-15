@@ -10,6 +10,10 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
+    public function __construct() {
+        $this->middleware('auth:api', ['except' => ['login', 'refresh']]);
+    }
+
     public function register(RegisterFormRequest $request)
     {
         try {
@@ -70,7 +74,8 @@ class AuthController extends Controller
      */
     public function refresh()
     {
-        return $this->respondWithToken(auth()->refresh());
+        // return $this->respondWithToken(auth()->refresh());
+        return response()->json(['success' => '更新成功']);
     }
 
     /**
@@ -86,6 +91,6 @@ class AuthController extends Controller
             'access_token' => $token,
             'token_type' => 'bearer',
             'expires_in' => auth('api')->factory()->getTTL() * 60
-        ])->header('Authorization', $token);
+        ],200)->header('Authorization', $token);
     }
 }
