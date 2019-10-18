@@ -95,6 +95,6 @@ class InvoicesController extends Controller
         $file['fileName'] = $request->file('file')->getClientOriginalName();
         $excelData = $this->getExcelData($file, 'invoices');
         $result = Invoice::insert($excelData);
-        return response()->json(['result'=>$result]);
+        return response()->json(['data'=>$excelData]);
     }
 }

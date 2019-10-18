@@ -94,6 +94,6 @@ class OrdersController extends Controller
         $file['fileName'] = $request->file('file')->getClientOriginalName();
         $excelData = $this->getExcelData($file, 'orders');
         $result = Order::insert($excelData);
-        return response()->json(['result'=>$result]);
+        return response()->json(['data'=>$excelData]);
     }
 }

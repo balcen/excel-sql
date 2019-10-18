@@ -95,6 +95,6 @@ class ClientsController extends Controller
         $file['fileName'] = $request->file('file')->getClientOriginalName();
         $excelData = $this->getExcelData($file,'clients');
         $result = Client::insert($excelData);
-        return response()->json(['result'=>$result]);
+        return response()->json(['data'=>$excelData]);
     }
 }
