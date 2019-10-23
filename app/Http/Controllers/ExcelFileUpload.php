@@ -81,6 +81,7 @@ trait ExcelFileUpload {
         foreach ($this->worksheet->getRowIterator(2) as $row) {
             $j = 0;
             foreach ($row->getCellIterator() as $key => $cell) {
+                if ($j >= count($headers)) break;
                 if ($key >= 1 && $cell->getValue() == null) break 2;
 
                 $cellValue = $cell->getValue();
