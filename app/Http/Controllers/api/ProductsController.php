@@ -23,11 +23,14 @@ class ProductsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::all();
+        $itemsPerPage = $request->itemsPerPage;
+        $products = Product::paginate($itemsPerPage);
 
         return response()->json($products);
+//        $products = Product::all();
+//        return response()->json($products);
     }
 
     /**
