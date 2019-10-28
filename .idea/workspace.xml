@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="b4612b22-e485-4c03-9353-35ec8388f4fa" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ExcelFileUpload.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ExcelFileUpload.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/api/ClientsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/api/ClientsController.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -43,6 +43,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="58a3decc7a5b4d37764d9a07be589c99abc3248b" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="PhpWorkspaceProjectConfiguration">
@@ -224,7 +229,9 @@
       <workItem from="1571361231023" duration="6056000" />
       <workItem from="1571619512891" duration="4812000" />
       <workItem from="1571725980313" duration="4301000" />
-      <workItem from="1571801111486" duration="1197000" />
+      <workItem from="1571801111486" duration="2470000" />
+      <workItem from="1571881741572" duration="3659000" />
+      <workItem from="1572241799548" duration="5093000" />
     </task>
     <task id="LOCAL-00001" summary="Client Product Modal Edit/New">
       <created>1562822714612</created>
@@ -282,7 +289,14 @@
       <option name="project" value="LOCAL" />
       <updated>1571640967473</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="根據類型讀取長度">
+      <created>1571823890155</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1571823890155</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -315,6 +329,7 @@
     <MESSAGE value="jwt-auth 新增 refresh" />
     <MESSAGE value="回傳儲存的data" />
     <MESSAGE value="修改database儲存格式utf8" />
-    <option name="LAST_COMMIT_MESSAGE" value="修改database儲存格式utf8" />
+    <MESSAGE value="根據類型讀取長度" />
+    <option name="LAST_COMMIT_MESSAGE" value="根據類型讀取長度" />
   </component>
 </project>

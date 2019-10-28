@@ -22,10 +22,15 @@ class ClientsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $clients = Client::all();
+        $itemsPerPage = $request->itemsPerPage;
+        $clients = Client::paginate($itemsPerPage);
+
         return response()->json($clients);
+
+//        $clients = Client::all();
+//        return response()->json($clients);
     }
 
     /**
