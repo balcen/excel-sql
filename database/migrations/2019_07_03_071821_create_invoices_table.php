@@ -30,7 +30,7 @@ class CreateInvoicesTable extends Migration
             $table->float('i_amount', 15, 4);
             $table->text('i_note')->nullable();
             $table->string('author', 50);
-            $table->string('file_name', 50);
+            $table->string('file_name', 50)->nullable();
             $table->timestamps();
         });
     }
