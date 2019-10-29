@@ -23,10 +23,14 @@ class OrdersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $orders = Order::all();
+        $itemsPerPage = $request->itemsPerPage;
+        $orders = Order::paginate($itemsPerPage);
+
         return response()->json($orders);
+//        $orders = Order::all();
+//        return response()->json($orders);
     }
 
     /**
