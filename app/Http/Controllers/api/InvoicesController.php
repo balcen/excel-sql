@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\ExcelFileUpload;
+use Illuminate\Validation\Rules\In;
 
 class InvoicesController extends Controller
 {
@@ -23,11 +24,15 @@ class InvoicesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $invoices = Invoice::all();
+        $itemsPerPage = $request->itemsPerPage;
+        $invoices = Invoice::paginate($itemsPerPage);
 
         return response()->json($invoices);
+
+//        $invoices = Invoice::all();
+//        return response()->json($invoices);
     }
 
     /**
