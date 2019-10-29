@@ -28,7 +28,7 @@ class Invoice extends Model
     ];
 
     protected $casts = [
-        'i_product_price' => 'decimal:4',
-        'i_amount' => 'decimal:4'
+        'i_product_price' => 'double',
+        'i_amount' => 'double'
     ];
 }
