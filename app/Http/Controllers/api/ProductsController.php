@@ -26,9 +26,19 @@ class ProductsController extends Controller
     public function index(Request $request)
     {
         $itemsPerPage = $request->itemsPerPage;
-        $products = Product::paginate($itemsPerPage);
-
+        $sortBy = $request->sortBy;
+        $sortDesc = $request->sortDesc;
+        if (strlen($sortBy) > 0 && strlen($sortDesc) > 0) {
+            if ($sortDesc === 'true') {
+                $products = Product::orderBy($sortBy, 'desc')->paginate($itemsPerPage);
+            } else {
+                $products = Product::orderBy($sortBy, 'asc')->paginate($itemsPerPage);
+            }
+        } else {
+            $products = Product::paginate($itemsPerPage);
+        }
         return response()->json($products);
+
 //        $products = Product::all();
 //        return response()->json($products);
     }
