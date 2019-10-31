@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b4612b22-e485-4c03-9353-35ec8388f4fa" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/api/OrdersController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/api/OrdersController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/api/InvoicesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/api/InvoicesController.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -233,7 +232,7 @@
       <workItem from="1571881741572" duration="3659000" />
       <workItem from="1572241799548" duration="6054000" />
       <workItem from="1572312712926" duration="8192000" />
-      <workItem from="1572484221328" duration="5085000" />
+      <workItem from="1572484221328" duration="5239000" />
     </task>
     <task id="LOCAL-00001" summary="Client Product Modal Edit/New">
       <created>1562822714612</created>
@@ -305,7 +304,14 @@
       <option name="project" value="LOCAL" />
       <updated>1572495187640</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="orders sortby">
+      <created>1572499332399</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1572499332399</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -340,6 +346,7 @@
     <MESSAGE value="修改database儲存格式utf8" />
     <MESSAGE value="根據類型讀取長度" />
     <MESSAGE value="products sortby" />
-    <option name="LAST_COMMIT_MESSAGE" value="products sortby" />
+    <MESSAGE value="orders sortby" />
+    <option name="LAST_COMMIT_MESSAGE" value="orders sortby" />
   </component>
 </project>

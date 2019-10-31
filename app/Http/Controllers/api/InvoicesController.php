@@ -27,7 +27,17 @@ class InvoicesController extends Controller
     public function index(Request $request)
     {
         $itemsPerPage = $request->itemsPerPage;
-        $invoices = Invoice::paginate($itemsPerPage);
+        $sortBy = $request->sortBy;
+        $sortDesc = $request->sortDesc;
+        if (strlen($sortBy) && strlen($sortDesc)) {
+            if ($sortDesc === 'true') {
+                $invoices = Invoice::orderBy($sortBy, 'desc')->paginate($itemsPerPage);
+            } else {
+                $invoices = Invoice::orderBy($sortBy, 'asc')->paginate($itemsPerPage);
+            }
+        } else {
+            $invoices = Invoice::paginate($itemsPerPage);
+        }
 
         return response()->json($invoices);
 
