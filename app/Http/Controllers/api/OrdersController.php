@@ -26,7 +26,17 @@ class OrdersController extends Controller
     public function index(Request $request)
     {
         $itemsPerPage = $request->itemsPerPage;
-        $orders = Order::paginate($itemsPerPage);
+        $sortBy = $request->sortBy;
+        $sortDesc = $request->sortDesc;
+        if (strlen($sortBy) > 0 && strlen($sortDesc) > 0) {
+            if ($sortDesc === 'true') {
+                $orders = Order::orderBy($sortBy, 'desc')->paginate($itemsPerPage);
+            } else {
+                $orders = Order::orderBy($sortBy, 'asc')->paginate($itemsPerPage);
+            }
+        } else {
+            $orders = Order::paginate($itemsPerPage);
+        }
 
         return response()->json($orders);
 //        $orders = Order::all();
