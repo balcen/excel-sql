@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b4612b22-e485-4c03-9353-35ec8388f4fa" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/api/InvoicesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/api/InvoicesController.php" afterDir="false" />
+    <list default="true" id="b4612b22-e485-4c03-9353-35ec8388f4fa" name="Default Changelist" comment="orders sortby">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/api/ClientsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/api/ClientsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -44,10 +46,13 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="58a3decc7a5b4d37764d9a07be589c99abc3248b" />
+        <entry key="$PROJECT_DIR$" value="ca33881eeb844b6ec1de873a7992e8721f9a73dd" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="PackageJsonUpdateNotifier">
+    <dismissed value="$PROJECT_DIR$/package.json" />
   </component>
   <component name="PhpWorkspaceProjectConfiguration">
     <include_path>
@@ -233,6 +238,9 @@
       <workItem from="1572241799548" duration="6054000" />
       <workItem from="1572312712926" duration="8192000" />
       <workItem from="1572484221328" duration="5239000" />
+      <workItem from="1572571273975" duration="2566000" />
+      <workItem from="1572838894826" duration="8676000" />
+      <workItem from="1572917894180" duration="8036000" />
     </task>
     <task id="LOCAL-00001" summary="Client Product Modal Edit/New">
       <created>1562822714612</created>
