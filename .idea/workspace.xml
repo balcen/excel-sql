@@ -4,7 +4,6 @@
     <list default="true" id="b4612b22-e485-4c03-9353-35ec8388f4fa" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/api/ProductsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/api/ProductsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/index.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -241,7 +240,7 @@
       <workItem from="1572571273975" duration="2566000" />
       <workItem from="1572838894826" duration="8676000" />
       <workItem from="1572917894180" duration="9254000" />
-      <workItem from="1573002787182" duration="6893000" />
+      <workItem from="1573002787182" duration="8425000" />
     </task>
     <task id="LOCAL-00001" summary="Client Product Modal Edit/New">
       <created>1562822714612</created>
@@ -327,7 +326,14 @@
       <option name="project" value="LOCAL" />
       <updated>1572944507168</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="dd cors">
+      <created>1573030639355</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1573030639356</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -364,6 +370,7 @@
     <MESSAGE value="products sortby" />
     <MESSAGE value="orders sortby" />
     <MESSAGE value="Clients search &amp; paginate" />
-    <option name="LAST_COMMIT_MESSAGE" value="Clients search &amp; paginate" />
+    <MESSAGE value="dd cors" />
+    <option name="LAST_COMMIT_MESSAGE" value="dd cors" />
   </component>
 </project>
