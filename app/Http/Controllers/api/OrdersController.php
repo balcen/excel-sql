@@ -110,4 +110,40 @@ class OrdersController extends Controller
         $result = Order::insert($excelData);
         return response()->json(['data'=>$excelData]);
     }
+
+    public function searchAll(Request $request)
+    {
+        $q = urldecode($request->q);
+        $itemsPerPage = $request->itemsPerPage;
+        if ($sortBy = $request->sortBy) {
+            $sortDesc = $request->sortDesc;
+            $orders = Order::where('o_no', 'like', '%' . $q . '%')
+                ->orWhere('o_date', 'like', '%' . $q . '%')
+                ->orWhere('o_seller_name', 'like', '%' . $q . '%')
+                ->orWhere('o_buyer_name', 'like', '%' . $q . '%')
+                ->orWhere('o_product_name', 'like', '%' . $q . '%')
+                ->orWhere('o_product_part_no', 'like', '%' . $q . '%')
+                ->orWhere('o_product_spec', 'like', '%' . $q . '%')
+                ->orWhere('o_product_price', 'like', '%' . $q . '%')
+                ->orWhere('o_currency', 'like', '%' . $q . '%')
+                ->orWhere('o_amount', 'like', '%' . $q . '%')
+                ->orWhere('o_note', 'like', '%' . $q . '%')
+                ->orderBy($sortBy, $sortDesc)
+                ->paginate($itemsPerPage);
+        } else {
+            $orders = Order::where('o_no', 'like', '%' . $q . '%')
+                ->orWhere('o_date', 'like', '%' . $q . '%')
+                ->orWhere('o_seller_name', 'like', '%' . $q . '%')
+                ->orWhere('o_buyer_name', 'like', '%' . $q . '%')
+                ->orWhere('o_product_name', 'like', '%' . $q . '%')
+                ->orWhere('o_product_part_no', 'like', '%' . $q . '%')
+                ->orWhere('o_product_spec', 'like', '%' . $q . '%')
+                ->orWhere('o_product_price', 'like', '%' . $q . '%')
+                ->orWhere('o_currency', 'like', '%' . $q . '%')
+                ->orWhere('o_amount', 'like', '%' . $q . '%')
+                ->orWhere('o_note', 'like', '%' . $q . '%')
+                ->paginate($itemsPerPage);
+        }
+        return response()->json($orders);
+    }
 }

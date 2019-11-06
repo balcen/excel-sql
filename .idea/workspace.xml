@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="b4612b22-e485-4c03-9353-35ec8388f4fa" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/api/ProductsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/api/ProductsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/api/OrdersController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/api/OrdersController.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -240,7 +240,7 @@
       <workItem from="1572571273975" duration="2566000" />
       <workItem from="1572838894826" duration="8676000" />
       <workItem from="1572917894180" duration="9254000" />
-      <workItem from="1573002787182" duration="8425000" />
+      <workItem from="1573002787182" duration="10125000" />
     </task>
     <task id="LOCAL-00001" summary="Client Product Modal Edit/New">
       <created>1562822714612</created>
@@ -333,7 +333,14 @@
       <option name="project" value="LOCAL" />
       <updated>1573030639356</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Products search sortable">
+      <created>1573032177385</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1573032177385</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -371,6 +378,7 @@
     <MESSAGE value="orders sortby" />
     <MESSAGE value="Clients search &amp; paginate" />
     <MESSAGE value="dd cors" />
-    <option name="LAST_COMMIT_MESSAGE" value="dd cors" />
+    <MESSAGE value="Products search sortable" />
+    <option name="LAST_COMMIT_MESSAGE" value="Products search sortable" />
   </component>
 </project>
