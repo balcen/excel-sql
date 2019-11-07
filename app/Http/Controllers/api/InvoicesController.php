@@ -112,4 +112,46 @@ class InvoicesController extends Controller
         $result = Invoice::insert($excelData);
         return response()->json(['data'=>$excelData]);
     }
+
+    public function searchAll(Request $request)
+    {
+        $q = urldecode($request->q);
+        $itemsPerPage = $request->itemsPerPage;
+        if($sortBy = $request->sortBy) {
+            $sortDesc = $request->sortDesc;
+            $invoices = Invoice::where('i_no', 'like', '%' . $q . '%')
+                ->orWhere('i_date', 'like', '%' . $q . '%')
+                ->orWhere('i_mature', 'like', '%' . $q . '%')
+                ->orWhere('i_order_no', 'like', '%' . $q . '%')
+                ->orWhere('i_seller_name', 'like', '%' . $q . '%')
+                ->orWhere('i_buyer_name', 'like', '%' . $q . '%')
+                ->orWhere('i_product_name', 'like', '%' . $q . '%')
+                ->orWhere('i_product_part_no', 'like', '%' . $q . '%')
+                ->orWhere('i_product_spec', 'like', '%' . $q . '%')
+                ->orWhere('i_product_price', 'like', '%' . $q . '%')
+                ->orWhere('i_currency', 'like', '%' . $q . '%')
+                ->orWhere('i_quantity', 'like', '%' . $q . '%')
+                ->orWhere('i_amount', 'like', '%' . $q . '%')
+                ->orWhere('i_note', 'like', '%' . $q . '%')
+                ->orderBy($sortBy, $sortDesc)
+                ->paginate($itemsPerPage);
+        } else {
+            $invoices = Invoice::where('i_no', 'like', '%' . $q . '%')
+                ->orWhere('i_date', 'like', '%' . $q . '%')
+                ->orWhere('i_mature', 'like', '%' . $q . '%')
+                ->orWhere('i_order_no', 'like', '%' . $q . '%')
+                ->orWhere('i_seller_name', 'like', '%' . $q . '%')
+                ->orWhere('i_buyer_name', 'like', '%' . $q . '%')
+                ->orWhere('i_product_name', 'like', '%' . $q . '%')
+                ->orWhere('i_product_part_no', 'like', '%' . $q . '%')
+                ->orWhere('i_product_spec', 'like', '%' . $q . '%')
+                ->orWhere('i_product_price', 'like', '%' . $q . '%')
+                ->orWhere('i_currency', 'like', '%' . $q . '%')
+                ->orWhere('i_quantity', 'like', '%' . $q . '%')
+                ->orWhere('i_amount', 'like', '%' . $q . '%')
+                ->orWhere('i_note', 'like', '%' . $q . '%')
+                ->paginate($itemsPerPage);
+        }
+        return response()->json($invoices);
+    }
 }
