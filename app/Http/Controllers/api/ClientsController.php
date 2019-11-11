@@ -102,4 +102,19 @@ class ClientsController extends Controller
         $result = Client::insert($excelData);
         return response()->json(['data'=>$excelData]);
     }
+
+    public function searchAll(Request $request)
+    {
+        $q = urldecode($request->q);
+        $itemsPerPage = $request->itemsPerPage;
+        $clients = Client::where('c_tax_id', 'like', '%' . $q . '%')
+            ->orWhere('c_name', 'like', '%' . $q . '%')
+            ->orWhere('c_type', 'like', '%' . $q . '%')
+            ->orWhere('c_contact', 'like', '%' . $q . '%')
+            ->orWhere('c_phone', 'like', '%' . $q . '%')
+            ->orWhere('c_mail', 'like', '%' . $q . '%')
+            ->paginate($itemsPerPage);
+
+        return response()->json($clients);
+    }
 }

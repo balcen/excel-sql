@@ -28,6 +28,12 @@ Route::middleware('jwt.refresh')->group(function() {
     Route::get('auth/refresh', 'api\AuthController@refresh');
 });
 
+// Search
+Route::get('clients/search', 'api\ClientsController@searchAll');
+Route::get('products/search', 'api\ProductsController@searchAll');
+Route::get('orders/search', 'api\OrdersController@searchAll');
+Route::get('invoices/search', 'api\InvoicesController@searchAll');
+
 Route::delete('clientsDeleteAll', 'api\ClientsController@deleteAll');
 Route::delete('productsDeleteAll', 'api\ProductsController@deleteAll');
 Route::delete('ordersDeleteAll', 'api\OrdersController@deleteAll');
@@ -46,4 +52,5 @@ Route::post('clients/upload', 'api\ClientsController@upload');
 Route::post('products/upload', 'api\ProductsController@upload');
 Route::post('orders/upload', 'api\OrdersController@upload');
 Route::post('invoices/upload', 'api\InvoicesController@upload');
+
 

@@ -123,4 +123,35 @@ class ProductsController extends Controller
         Product::insertIgnore($excelData);
         return response()->json(['data' => $excelData]);
     }
+
+    public function searchAll(Request $request)
+    {
+        $q = urldecode($request->q);
+        $itemsPerPage = $request->itemsPerPage;
+        if ($sortBy = $request->sortBy) {
+            $sortDesc = $request->sortDesc;
+            $products = Product::where('p_type', 'like', '%' . $q . '%')
+                ->orWhere('p_name', 'like', '%' . $q . '%')
+                ->orWhere('p_part_no', 'like', '%' . $q . '%')
+                ->orWhere('p_spec', 'like', '%' . $q . '%')
+                ->orWhere('p_currency', 'like', '%' . $q . '%')
+                ->orWhere('p_size', 'like', '%' . $q . '%')
+                ->orWhere('p_weight', 'like', '%' . $q . '%')
+                ->orWhere('p_note', 'like', '%' . $q . '%')
+                ->orderBy($sortBy, $sortDesc)
+                ->paginate($itemsPerPage);
+        } else {
+            $products = Product::where('p_type', 'like', '%' . $q . '%')
+                ->orWhere('p_name', 'like', '%' . $q . '%')
+                ->orWhere('p_part_no', 'like', '%' . $q . '%')
+                ->orWhere('p_spec', 'like', '%' . $q . '%')
+                ->orWhere('p_currency', 'like', '%' . $q . '%')
+                ->orWhere('p_size', 'like', '%' . $q . '%')
+                ->orWhere('p_weight', 'like', '%' . $q . '%')
+                ->orWhere('p_note', 'like', '%' . $q . '%')
+                ->paginate($itemsPerPage);
+        }
+
+        return response()->json($products);
+    }
 }
