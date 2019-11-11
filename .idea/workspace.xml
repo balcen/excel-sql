@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b4612b22-e485-4c03-9353-35ec8388f4fa" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/api/InvoicesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/api/InvoicesController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/api/ClientsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/api/ClientsController.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -44,10 +45,13 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="58a3decc7a5b4d37764d9a07be589c99abc3248b" />
+        <entry key="$PROJECT_DIR$" value="ca33881eeb844b6ec1de873a7992e8721f9a73dd" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="PackageJsonUpdateNotifier">
+    <dismissed value="$PROJECT_DIR$/package.json" />
   </component>
   <component name="PhpWorkspaceProjectConfiguration">
     <include_path>
@@ -233,6 +237,11 @@
       <workItem from="1572241799548" duration="6054000" />
       <workItem from="1572312712926" duration="8192000" />
       <workItem from="1572484221328" duration="5239000" />
+      <workItem from="1572571273975" duration="2566000" />
+      <workItem from="1572838894826" duration="8676000" />
+      <workItem from="1572917894180" duration="9254000" />
+      <workItem from="1573002787182" duration="10431000" />
+      <workItem from="1573088915252" duration="1097000" />
     </task>
     <task id="LOCAL-00001" summary="Client Product Modal Edit/New">
       <created>1562822714612</created>
@@ -311,7 +320,35 @@
       <option name="project" value="LOCAL" />
       <updated>1572499332399</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Clients search &amp; paginate">
+      <created>1572944507168</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1572944507168</updated>
+    </task>
+    <task id="LOCAL-00013" summary="dd cors">
+      <created>1573030639355</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1573030639356</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Products search sortable">
+      <created>1573032177385</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1573032177385</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Orders search sortable">
+      <created>1573034395917</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1573034395917</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -347,6 +384,10 @@
     <MESSAGE value="根據類型讀取長度" />
     <MESSAGE value="products sortby" />
     <MESSAGE value="orders sortby" />
-    <option name="LAST_COMMIT_MESSAGE" value="orders sortby" />
+    <MESSAGE value="Clients search &amp; paginate" />
+    <MESSAGE value="dd cors" />
+    <MESSAGE value="Products search sortable" />
+    <MESSAGE value="Orders search sortable" />
+    <option name="LAST_COMMIT_MESSAGE" value="Orders search sortable" />
   </component>
 </project>
