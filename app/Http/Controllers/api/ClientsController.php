@@ -5,6 +5,7 @@ namespace App\Http\Controllers\api;
 use App\Client;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\ExcelFileUpload;
 
@@ -54,10 +55,13 @@ class ClientsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
-        $client = Client::find($id);
-        return response()->json($client);
+//        $client = Client::find($id);
+        $itemsPerPage = $request->itemsPerPage;
+        $clients = Client::where('id', '>=', $id)
+            ->paginate($itemsPerPage);
+        return response()->json($clients);
     }
 
     /**
@@ -99,8 +103,9 @@ class ClientsController extends Controller
         $file['file'] = $request->file('file');
         $file['fileName'] = $request->file('file')->getClientOriginalName();
         $excelData = $this->getExcelData($file,'clients');
-        $result = Client::insert($excelData);
-        return response()->json(['data'=>$excelData]);
+        Client::insert($excelData);
+        $id = DB::getPdo()->lastInsertId();
+        return response()->json(['id' => $id]);
     }
 
     public function searchAll(Request $request)
@@ -114,7 +119,6 @@ class ClientsController extends Controller
             ->orWhere('c_phone', 'like', '%' . $q . '%')
             ->orWhere('c_mail', 'like', '%' . $q . '%')
             ->paginate($itemsPerPage);
-
         return response()->json($clients);
     }
 }

@@ -3,7 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="b4612b22-e485-4c03-9353-35ec8388f4fa" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/api/ClientsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/api/ClientsController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/api/InvoicesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/api/InvoicesController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/api/OrdersController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/api/OrdersController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/api/ProductsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/api/ProductsController.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -242,6 +245,8 @@
       <workItem from="1572917894180" duration="9254000" />
       <workItem from="1573002787182" duration="10431000" />
       <workItem from="1573088915252" duration="1097000" />
+      <workItem from="1573438024371" duration="6655000" />
+      <workItem from="1573520640656" duration="8193000" />
     </task>
     <task id="LOCAL-00001" summary="Client Product Modal Edit/New">
       <created>1562822714612</created>

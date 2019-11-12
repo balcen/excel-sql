@@ -6,9 +6,9 @@ use App\Invoice;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\ExcelFileUpload;
-use Illuminate\Validation\Rules\In;
 
 class InvoicesController extends Controller
 {
@@ -27,14 +27,10 @@ class InvoicesController extends Controller
     public function index(Request $request)
     {
         $itemsPerPage = $request->itemsPerPage;
-        $sortBy = $request->sortBy;
-        $sortDesc = $request->sortDesc;
-        if (strlen($sortBy) && strlen($sortDesc)) {
-            if ($sortDesc === 'true') {
-                $invoices = Invoice::orderBy($sortBy, 'desc')->paginate($itemsPerPage);
-            } else {
-                $invoices = Invoice::orderBy($sortBy, 'asc')->paginate($itemsPerPage);
-            }
+        if ($sortBy = $request->sortBy) {
+            $sortDesc = $request->sortDesc;
+            $invoices = Invoice::orderBy($sortBy, $sortDesc)
+                ->paginate($itemsPerPage);
         } else {
             $invoices = Invoice::paginate($itemsPerPage);
         }
@@ -66,9 +62,16 @@ class InvoicesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
-        //
+        $itemsPerPage = $request->itemsPerPage;
+        $query = Invoice::where('id', '>=', $id);
+        if($sortBy = $request->sortBay) {
+            $sortDesc = $request->sortDesc;
+            $query = $query->orderBy($sortBy, $sortDesc);
+        }
+        $invoice = $query->paginate($itemsPerPage);
+        return response()->json($invoice);
     }
 
     /**
@@ -109,49 +112,35 @@ class InvoicesController extends Controller
         $file['file'] = $request->file('file');
         $file['fileName'] = $request->file('file')->getClientOriginalName();
         $excelData = $this->getExcelData($file, 'invoices');
-        $result = Invoice::insert($excelData);
-        return response()->json(['data'=>$excelData]);
+        Invoice::insert($excelData);
+        $id = DB::getPdo()->lastInsertId();
+        return response()->json(['id'=>$id]);
     }
 
     public function searchAll(Request $request)
     {
         $q = urldecode($request->q);
         $itemsPerPage = $request->itemsPerPage;
+        $query = Invoice::where('i_no', 'like', '%' . $q . '%')
+            ->orWhere('i_date', 'like', '%' . $q . '%')
+            ->orWhere('i_mature', 'like', '%' . $q . '%')
+            ->orWhere('i_order_no', 'like', '%' . $q . '%')
+            ->orWhere('i_seller_name', 'like', '%' . $q . '%')
+            ->orWhere('i_buyer_name', 'like', '%' . $q . '%')
+            ->orWhere('i_product_name', 'like', '%' . $q . '%')
+            ->orWhere('i_product_part_no', 'like', '%' . $q . '%')
+            ->orWhere('i_product_spec', 'like', '%' . $q . '%')
+            ->orWhere('i_product_price', 'like', '%' . $q . '%')
+            ->orWhere('i_currency', 'like', '%' . $q . '%')
+            ->orWhere('i_quantity', 'like', '%' . $q . '%')
+            ->orWhere('i_amount', 'like', '%' . $q . '%')
+            ->orWhere('i_note', 'like', '%' . $q . '%');
         if($sortBy = $request->sortBy) {
             $sortDesc = $request->sortDesc;
-            $invoices = Invoice::where('i_no', 'like', '%' . $q . '%')
-                ->orWhere('i_date', 'like', '%' . $q . '%')
-                ->orWhere('i_mature', 'like', '%' . $q . '%')
-                ->orWhere('i_order_no', 'like', '%' . $q . '%')
-                ->orWhere('i_seller_name', 'like', '%' . $q . '%')
-                ->orWhere('i_buyer_name', 'like', '%' . $q . '%')
-                ->orWhere('i_product_name', 'like', '%' . $q . '%')
-                ->orWhere('i_product_part_no', 'like', '%' . $q . '%')
-                ->orWhere('i_product_spec', 'like', '%' . $q . '%')
-                ->orWhere('i_product_price', 'like', '%' . $q . '%')
-                ->orWhere('i_currency', 'like', '%' . $q . '%')
-                ->orWhere('i_quantity', 'like', '%' . $q . '%')
-                ->orWhere('i_amount', 'like', '%' . $q . '%')
-                ->orWhere('i_note', 'like', '%' . $q . '%')
-                ->orderBy($sortBy, $sortDesc)
-                ->paginate($itemsPerPage);
-        } else {
-            $invoices = Invoice::where('i_no', 'like', '%' . $q . '%')
-                ->orWhere('i_date', 'like', '%' . $q . '%')
-                ->orWhere('i_mature', 'like', '%' . $q . '%')
-                ->orWhere('i_order_no', 'like', '%' . $q . '%')
-                ->orWhere('i_seller_name', 'like', '%' . $q . '%')
-                ->orWhere('i_buyer_name', 'like', '%' . $q . '%')
-                ->orWhere('i_product_name', 'like', '%' . $q . '%')
-                ->orWhere('i_product_part_no', 'like', '%' . $q . '%')
-                ->orWhere('i_product_spec', 'like', '%' . $q . '%')
-                ->orWhere('i_product_price', 'like', '%' . $q . '%')
-                ->orWhere('i_currency', 'like', '%' . $q . '%')
-                ->orWhere('i_quantity', 'like', '%' . $q . '%')
-                ->orWhere('i_amount', 'like', '%' . $q . '%')
-                ->orWhere('i_note', 'like', '%' . $q . '%')
-                ->paginate($itemsPerPage);
+            $query = $query->orderBy($sortBy, $sortDesc);
         }
+        $invoices = $query->paginate($itemsPerPage);
+
         return response()->json($invoices);
     }
 }

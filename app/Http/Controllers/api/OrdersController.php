@@ -6,6 +6,7 @@ use App\Order;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\ExcelFileUpload;
 
@@ -26,19 +27,16 @@ class OrdersController extends Controller
     public function index(Request $request)
     {
         $itemsPerPage = $request->itemsPerPage;
-        $sortBy = $request->sortBy;
-        $sortDesc = $request->sortDesc;
-        if (strlen($sortBy) > 0 && strlen($sortDesc) > 0) {
-            if ($sortDesc === 'true') {
-                $orders = Order::orderBy($sortBy, 'desc')->paginate($itemsPerPage);
-            } else {
-                $orders = Order::orderBy($sortBy, 'asc')->paginate($itemsPerPage);
-            }
+        if($sortBy = $request->sortBy) {
+            $sortDesc = $request->sortDesc;
+            $orders = Order::orderBy($sortBy, $sortDesc)
+                ->paginate($itemsPerPage);
         } else {
             $orders = Order::paginate($itemsPerPage);
         }
 
         return response()->json($orders);
+
 //        $orders = Order::all();
 //        return response()->json($orders);
     }
@@ -64,9 +62,16 @@ class OrdersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
-        //
+        $itemsPerPage = $request->itemsPerPage;
+        $query = Order::where('id', '>=', $id);
+        if ($sortBy = $request->sortBy) {
+            $sortDesc = $request->sortDesc;
+            $query = $query->orderBy($sortBy, $sortDesc);
+        }
+        $orders = $query->paginate($itemsPerPage);
+        return response()->json($orders);
     }
 
     /**
@@ -107,43 +112,32 @@ class OrdersController extends Controller
         $file['file'] = $request->file('file');
         $file['fileName'] = $request->file('file')->getClientOriginalName();
         $excelData = $this->getExcelData($file, 'orders');
-        $result = Order::insert($excelData);
-        return response()->json(['data'=>$excelData]);
+        Order::insert($excelData);
+        $id = DB::getPdo()->lastInsertId();
+        return response()->json(['id'=>$id]);
     }
 
     public function searchAll(Request $request)
     {
         $q = urldecode($request->q);
         $itemsPerPage = $request->itemsPerPage;
-        if ($sortBy = $request->sortBy) {
+        $query = Order::where('o_no', 'like', '%' . $q . '%')
+            ->orWhere('o_date', 'like', '%' . $q . '%')
+            ->orWhere('o_seller_name', 'like', '%' . $q . '%')
+            ->orWhere('o_buyer_name', 'like', '%' . $q . '%')
+            ->orWhere('o_product_name', 'like', '%' . $q . '%')
+            ->orWhere('o_product_part_no', 'like', '%' . $q . '%')
+            ->orWhere('o_product_spec', 'like', '%' . $q . '%')
+            ->orWhere('o_product_price', 'like', '%' . $q . '%')
+            ->orWhere('o_currency', 'like', '%' . $q . '%')
+            ->orWhere('o_amount', 'like', '%' . $q . '%')
+            ->orWhere('o_note', 'like', '%' . $q . '%');
+        if($sortBy = $request->sortBy) {
             $sortDesc = $request->sortDesc;
-            $orders = Order::where('o_no', 'like', '%' . $q . '%')
-                ->orWhere('o_date', 'like', '%' . $q . '%')
-                ->orWhere('o_seller_name', 'like', '%' . $q . '%')
-                ->orWhere('o_buyer_name', 'like', '%' . $q . '%')
-                ->orWhere('o_product_name', 'like', '%' . $q . '%')
-                ->orWhere('o_product_part_no', 'like', '%' . $q . '%')
-                ->orWhere('o_product_spec', 'like', '%' . $q . '%')
-                ->orWhere('o_product_price', 'like', '%' . $q . '%')
-                ->orWhere('o_currency', 'like', '%' . $q . '%')
-                ->orWhere('o_amount', 'like', '%' . $q . '%')
-                ->orWhere('o_note', 'like', '%' . $q . '%')
-                ->orderBy($sortBy, $sortDesc)
-                ->paginate($itemsPerPage);
-        } else {
-            $orders = Order::where('o_no', 'like', '%' . $q . '%')
-                ->orWhere('o_date', 'like', '%' . $q . '%')
-                ->orWhere('o_seller_name', 'like', '%' . $q . '%')
-                ->orWhere('o_buyer_name', 'like', '%' . $q . '%')
-                ->orWhere('o_product_name', 'like', '%' . $q . '%')
-                ->orWhere('o_product_part_no', 'like', '%' . $q . '%')
-                ->orWhere('o_product_spec', 'like', '%' . $q . '%')
-                ->orWhere('o_product_price', 'like', '%' . $q . '%')
-                ->orWhere('o_currency', 'like', '%' . $q . '%')
-                ->orWhere('o_amount', 'like', '%' . $q . '%')
-                ->orWhere('o_note', 'like', '%' . $q . '%')
-                ->paginate($itemsPerPage);
+            $query = $query->orderBy($sortBy, $sortDesc);
         }
+        $orders = $query->paginate($itemsPerPage);
+
         return response()->json($orders);
     }
 }
