@@ -3,10 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="b4612b22-e485-4c03-9353-35ec8388f4fa" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/api/ClientsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/api/ClientsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/api/InvoicesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/api/InvoicesController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/api/OrdersController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/api/OrdersController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/api/ProductsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/api/ProductsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/api/AuthController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/api/AuthController.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -246,7 +243,9 @@
       <workItem from="1573002787182" duration="10431000" />
       <workItem from="1573088915252" duration="1097000" />
       <workItem from="1573438024371" duration="6655000" />
-      <workItem from="1573520640656" duration="8193000" />
+      <workItem from="1573520640656" duration="8802000" />
+      <workItem from="1573607661190" duration="2913000" />
+      <workItem from="1573724953971" duration="685000" />
     </task>
     <task id="LOCAL-00001" summary="Client Product Modal Edit/New">
       <created>1562822714612</created>
@@ -353,7 +352,14 @@
       <option name="project" value="LOCAL" />
       <updated>1573034395917</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="retrieve data after upload">
+      <created>1573551796472</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1573551796472</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -393,6 +399,7 @@
     <MESSAGE value="dd cors" />
     <MESSAGE value="Products search sortable" />
     <MESSAGE value="Orders search sortable" />
-    <option name="LAST_COMMIT_MESSAGE" value="Orders search sortable" />
+    <MESSAGE value="retrieve data after upload" />
+    <option name="LAST_COMMIT_MESSAGE" value="retrieve data after upload" />
   </component>
 </project>
