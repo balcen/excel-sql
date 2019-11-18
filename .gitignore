@@ -15,3 +15,5 @@ yarn-error.log
 /public/img
 /public/svg
 /resources/views/index.blade.php
+
+/.idea/workspace.xml
