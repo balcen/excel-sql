@@ -122,11 +122,15 @@ class ProductsController extends Controller
 
     public function upload(Request $request)
     {
-        $file['file'] = $request->file('file');
-        $file['fileName'] = $request->file('file')->getClientOriginalName();
-        $excelData = $this->getExcelData($file, 'products');
-        Product::insert($excelData);
-        $id = DB::getPdo()->lastInsertId();
+        try {
+            $file['file'] = $request->file('file');
+            $file['fileName'] = $request->file('file')->getClientOriginalName();
+            $excelData = $this->getExcelData($file, 'products');
+            Product::insert($excelData);
+            $id = DB::getPdo()->lastInsertId();
+        } catch (\Exception $e) {
+            return response()->json($e);
+        }
         return response()->json(['id' => $id]);
     }
 
