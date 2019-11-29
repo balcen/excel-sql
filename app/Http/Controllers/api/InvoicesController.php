@@ -135,10 +135,16 @@ class InvoicesController extends Controller
             ->orWhere('i_quantity', 'like', '%' . $q . '%')
             ->orWhere('i_amount', 'like', '%' . $q . '%')
             ->orWhere('i_note', 'like', '%' . $q . '%');
+
         if($sortBy = $request->sortBy) {
             $sortDesc = $request->sortDesc;
             $query = $query->orderBy($sortBy, $sortDesc);
         }
+
+        if ($id = $request->id) {
+            $query = $query->where('id', '>=', $id);
+        }
+
         $invoices = $query->paginate($itemsPerPage);
 
         return response()->json($invoices);

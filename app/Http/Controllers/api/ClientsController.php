@@ -112,13 +112,16 @@ class ClientsController extends Controller
     {
         $q = urldecode($request->q);
         $itemsPerPage = $request->itemsPerPage;
-        $clients = Client::where('c_tax_id', 'like', '%' . $q . '%')
+        $query = Client::where('c_tax_id', 'like', '%' . $q . '%')
             ->orWhere('c_name', 'like', '%' . $q . '%')
             ->orWhere('c_type', 'like', '%' . $q . '%')
             ->orWhere('c_contact', 'like', '%' . $q . '%')
             ->orWhere('c_phone', 'like', '%' . $q . '%')
-            ->orWhere('c_mail', 'like', '%' . $q . '%')
-            ->paginate($itemsPerPage);
+            ->orWhere('c_mail', 'like', '%' . $q . '%');
+        if ($id = $request->id) {
+            $query = $query->where('id', '>=', $id);
+        }
+        $clients = $query->paginate($itemsPerPage);
         return response()->json($clients);
     }
 }

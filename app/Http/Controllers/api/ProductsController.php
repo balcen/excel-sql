@@ -146,10 +146,16 @@ class ProductsController extends Controller
             ->orWhere('p_size', 'like', '%' . $q . '%')
             ->orWhere('p_weight', 'like', '%' . $q . '%')
             ->orWhere('p_note', 'like', '%' . $q . '%');
+
         if ($sortBy = $request->sortBy) {
             $sortDesc = $request->sortDesc;
             $query = $query->orderBy($sortBy, $sortDesc);
         }
+
+        if ($id = $request->id) {
+            $query = $query->where('id', '>=', $id);
+        }
+
         $products = $query->paginate($itemsPerPage);
 
         return response()->json($products);

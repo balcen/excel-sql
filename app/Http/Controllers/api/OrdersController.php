@@ -132,10 +132,16 @@ class OrdersController extends Controller
             ->orWhere('o_currency', 'like', '%' . $q . '%')
             ->orWhere('o_amount', 'like', '%' . $q . '%')
             ->orWhere('o_note', 'like', '%' . $q . '%');
+
         if($sortBy = $request->sortBy) {
             $sortDesc = $request->sortDesc;
             $query = $query->orderBy($sortBy, $sortDesc);
         }
+
+        if ($id = $request->id) {
+            $query = $query->where('id', '>=', $id);
+        }
+
         $orders = $query->paginate($itemsPerPage);
 
         return response()->json($orders);
