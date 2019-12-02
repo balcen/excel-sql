@@ -136,16 +136,21 @@ class ProductsController extends Controller
 
     public function searchAll(Request $request)
     {
-        $q = urldecode($request->q);
         $itemsPerPage = $request->itemsPerPage;
-        $query = Product::where('p_type', 'like', '%' . $q . '%')
-            ->orWhere('p_name', 'like', '%' . $q . '%')
-            ->orWhere('p_part_no', 'like', '%' . $q . '%')
-            ->orWhere('p_spec', 'like', '%' . $q . '%')
-            ->orWhere('p_currency', 'like', '%' . $q . '%')
-            ->orWhere('p_size', 'like', '%' . $q . '%')
-            ->orWhere('p_weight', 'like', '%' . $q . '%')
-            ->orWhere('p_note', 'like', '%' . $q . '%');
+        $query = Product::query();
+
+        if ($request->q) {
+            $q = urldecode($request->q);
+            $query = $query->where('p_type', 'like', '%' . $q . '%')
+                ->orWhere('p_name', 'like', '%' . $q . '%')
+                ->orWhere('p_part_no', 'like', '%' . $q . '%')
+                ->orWhere('p_spec', 'like', '%' . $q . '%')
+                ->orWhere('p_price', 'like', '%' . $q . '%')
+                ->orWhere('p_currency', 'like', '%' . $q . '%')
+                ->orWhere('p_size', 'like', '%' . $q . '%')
+                ->orWhere('p_weight', 'like', '%' . $q . '%')
+                ->orWhere('p_note', 'like', '%' . $q . '%');
+        }
 
         if ($sortBy = $request->sortBy) {
             $sortDesc = $request->sortDesc;
@@ -154,6 +159,10 @@ class ProductsController extends Controller
 
         if ($id = $request->id) {
             $query = $query->where('id', '>=', $id);
+        }
+
+        if ($p = $request->p) {
+            $query = $query->whereBetween('p_price', $p);
         }
 
         $products = $query->paginate($itemsPerPage);

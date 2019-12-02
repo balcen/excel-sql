@@ -119,31 +119,52 @@ class InvoicesController extends Controller
 
     public function searchAll(Request $request)
     {
-        $q = urldecode($request->q);
         $itemsPerPage = $request->itemsPerPage;
-        $query = Invoice::where('i_no', 'like', '%' . $q . '%')
-            ->orWhere('i_date', 'like', '%' . $q . '%')
-            ->orWhere('i_mature', 'like', '%' . $q . '%')
-            ->orWhere('i_order_no', 'like', '%' . $q . '%')
-            ->orWhere('i_seller_name', 'like', '%' . $q . '%')
-            ->orWhere('i_buyer_name', 'like', '%' . $q . '%')
-            ->orWhere('i_product_name', 'like', '%' . $q . '%')
-            ->orWhere('i_product_part_no', 'like', '%' . $q . '%')
-            ->orWhere('i_product_spec', 'like', '%' . $q . '%')
-            ->orWhere('i_product_price', 'like', '%' . $q . '%')
-            ->orWhere('i_currency', 'like', '%' . $q . '%')
-            ->orWhere('i_quantity', 'like', '%' . $q . '%')
-            ->orWhere('i_amount', 'like', '%' . $q . '%')
-            ->orWhere('i_note', 'like', '%' . $q . '%');
+        $query = Invoice::query();
+
+        if ($request->q) {
+            $q = urldecode($request->q);
+            $query = $query->where('i_no', 'like', '%' . $q . '%')
+                ->orWhere('i_date', 'like', '%' . $q . '%')
+                ->orWhere('i_mature', 'like', '%' . $q . '%')
+                ->orWhere('i_order_no', 'like', '%' . $q . '%')
+                ->orWhere('i_seller_name', 'like', '%' . $q . '%')
+                ->orWhere('i_buyer_name', 'like', '%' . $q . '%')
+                ->orWhere('i_product_name', 'like', '%' . $q . '%')
+                ->orWhere('i_product_part_no', 'like', '%' . $q . '%')
+                ->orWhere('i_product_spec', 'like', '%' . $q . '%')
+                ->orWhere('i_product_price', 'like', '%' . $q . '%')
+                ->orWhere('i_currency', 'like', '%' . $q . '%')
+                ->orWhere('i_quantity', 'like', '%' . $q . '%')
+                ->orWhere('i_amount', 'like', '%' . $q . '%')
+                ->orWhere('i_note', 'like', '%' . $q . '%');
+        }
+
+        if ($id = $request->id) {
+            $query = $query->where('id', '>=', $id);
+        }
+
+        if ($p = $request->p) {
+            $query = $query->whereBetween('i_product_price', $p);
+        }
+
+        if ($a = $request->a) {
+            $query = $query->whereBetween('i_amount', $a);
+        }
+
+        if ($d = $request->d) {
+            $query = $query->whereBetween('i_date', $d);
+        }
+
+        if ($ed = $request->ed) {
+            $query = $query->whereBetween('i_mature', $ed);
+        }
 
         if($sortBy = $request->sortBy) {
             $sortDesc = $request->sortDesc;
             $query = $query->orderBy($sortBy, $sortDesc);
         }
 
-        if ($id = $request->id) {
-            $query = $query->where('id', '>=', $id);
-        }
 
         $invoices = $query->paginate($itemsPerPage);
 

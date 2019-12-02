@@ -119,27 +119,43 @@ class OrdersController extends Controller
 
     public function searchAll(Request $request)
     {
-        $q = urldecode($request->q);
         $itemsPerPage = $request->itemsPerPage;
-        $query = Order::where('o_no', 'like', '%' . $q . '%')
-            ->orWhere('o_date', 'like', '%' . $q . '%')
-            ->orWhere('o_seller_name', 'like', '%' . $q . '%')
-            ->orWhere('o_buyer_name', 'like', '%' . $q . '%')
-            ->orWhere('o_product_name', 'like', '%' . $q . '%')
-            ->orWhere('o_product_part_no', 'like', '%' . $q . '%')
-            ->orWhere('o_product_spec', 'like', '%' . $q . '%')
-            ->orWhere('o_product_price', 'like', '%' . $q . '%')
-            ->orWhere('o_currency', 'like', '%' . $q . '%')
-            ->orWhere('o_amount', 'like', '%' . $q . '%')
-            ->orWhere('o_note', 'like', '%' . $q . '%');
+        $query = Order::query();
 
-        if($sortBy = $request->sortBy) {
-            $sortDesc = $request->sortDesc;
-            $query = $query->orderBy($sortBy, $sortDesc);
+        if ($request->q) {
+            $q = urldecode($request->q);
+            $query = $query->where('o_no', 'like', '%' . $q . '%')
+                ->orWhere('o_date', 'like', '%' . $q . '%')
+                ->orWhere('o_seller_name', 'like', '%' . $q . '%')
+                ->orWhere('o_buyer_name', 'like', '%' . $q . '%')
+                ->orWhere('o_product_name', 'like', '%' . $q . '%')
+                ->orWhere('o_product_part_no', 'like', '%' . $q . '%')
+                ->orWhere('o_product_spec', 'like', '%' . $q . '%')
+                ->orWhere('o_product_price', 'like', '%' . $q . '%')
+                ->orWhere('o_currency', 'like', '%' . $q . '%')
+                ->orWhere('o_amount', 'like', '%' . $q . '%')
+                ->orWhere('o_note', 'like', '%' . $q . '%');
         }
 
         if ($id = $request->id) {
             $query = $query->where('id', '>=', $id);
+        }
+
+        if ($p = $request->p) {
+            $query = $query->whereBetween('o_product_price', $p);
+        }
+
+        if ($a = $request->a) {
+            $query = $query->whereBetween('o_amount', $a);
+        }
+
+        if ($d = $request->d) {
+            $query = $query->whereBetween('o_date', $d);
+        }
+
+        if($sortBy = $request->sortBy) {
+            $sortDesc = $request->sortDesc;
+            $query = $query->orderBy($sortBy, $sortDesc);
         }
 
         $orders = $query->paginate($itemsPerPage);
