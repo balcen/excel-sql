@@ -139,17 +139,20 @@ class ProductsController extends Controller
         $itemsPerPage = $request->itemsPerPage;
         $query = Product::query();
 
+
         if ($request->q) {
             $q = urldecode($request->q);
-            $query = $query->where('p_type', 'like', '%' . $q . '%')
-                ->orWhere('p_name', 'like', '%' . $q . '%')
-                ->orWhere('p_part_no', 'like', '%' . $q . '%')
-                ->orWhere('p_spec', 'like', '%' . $q . '%')
-                ->orWhere('p_price', 'like', '%' . $q . '%')
-                ->orWhere('p_currency', 'like', '%' . $q . '%')
-                ->orWhere('p_size', 'like', '%' . $q . '%')
-                ->orWhere('p_weight', 'like', '%' . $q . '%')
-                ->orWhere('p_note', 'like', '%' . $q . '%');
+            $query = $query->where(function($qy) use ($q) {
+                    $qy = $qy->where('p_type', 'like', '%' . $q . '%')
+                        ->orWhere('p_name', 'like', '%' . $q . '%')
+                        ->orWhere('p_part_no', 'like', '%' . $q . '%')
+                        ->orWhere('p_spec', 'like', '%' . $q . '%')
+                        ->orWhere('p_price', 'like', '%' . $q . '%')
+                        ->orWhere('p_currency', 'like', '%' . $q . '%')
+                        ->orWhere('p_size', 'like', '%' . $q . '%')
+                        ->orWhere('p_weight', 'like', '%' . $q . '%')
+                        ->orWhere('p_note', 'like', '%' . $q . '%');
+                });
         }
 
         if ($sortBy = $request->sortBy) {
@@ -161,8 +164,14 @@ class ProductsController extends Controller
             $query = $query->where('id', '>=', $id);
         }
 
-        if ($p = $request->p) {
-            $query = $query->whereBetween('p_price', $p);
+        if ($request->p) {
+            $p = preg_split('~,~', $request->p);
+            if (!empty($p[0])) {
+                $query = $query->where('p_price', '>=', $p[0]);
+            }
+            if (!empty($p[1])) {
+                $query = $query->where('p_price', '<=', $p[1]);
+            }
         }
 
         $products = $query->paginate($itemsPerPage);

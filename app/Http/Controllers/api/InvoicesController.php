@@ -124,40 +124,64 @@ class InvoicesController extends Controller
 
         if ($request->q) {
             $q = urldecode($request->q);
-            $query = $query->where('i_no', 'like', '%' . $q . '%')
-                ->orWhere('i_date', 'like', '%' . $q . '%')
-                ->orWhere('i_mature', 'like', '%' . $q . '%')
-                ->orWhere('i_order_no', 'like', '%' . $q . '%')
-                ->orWhere('i_seller_name', 'like', '%' . $q . '%')
-                ->orWhere('i_buyer_name', 'like', '%' . $q . '%')
-                ->orWhere('i_product_name', 'like', '%' . $q . '%')
-                ->orWhere('i_product_part_no', 'like', '%' . $q . '%')
-                ->orWhere('i_product_spec', 'like', '%' . $q . '%')
-                ->orWhere('i_product_price', 'like', '%' . $q . '%')
-                ->orWhere('i_currency', 'like', '%' . $q . '%')
-                ->orWhere('i_quantity', 'like', '%' . $q . '%')
-                ->orWhere('i_amount', 'like', '%' . $q . '%')
-                ->orWhere('i_note', 'like', '%' . $q . '%');
+            $query = $query->where(function($qy) use ($q) {
+                $qy = $qy->where('i_no', 'like', '%' . $q . '%')
+                    ->orWhere('i_date', 'like', '%' . $q . '%')
+                    ->orWhere('i_mature', 'like', '%' . $q . '%')
+                    ->orWhere('i_order_no', 'like', '%' . $q . '%')
+                    ->orWhere('i_seller_name', 'like', '%' . $q . '%')
+                    ->orWhere('i_buyer_name', 'like', '%' . $q . '%')
+                    ->orWhere('i_product_name', 'like', '%' . $q . '%')
+                    ->orWhere('i_product_part_no', 'like', '%' . $q . '%')
+                    ->orWhere('i_product_spec', 'like', '%' . $q . '%')
+                    ->orWhere('i_product_price', 'like', '%' . $q . '%')
+                    ->orWhere('i_currency', 'like', '%' . $q . '%')
+                    ->orWhere('i_quantity', 'like', '%' . $q . '%')
+                    ->orWhere('i_amount', 'like', '%' . $q . '%')
+                    ->orWhere('i_note', 'like', '%' . $q . '%');
+            });
         }
 
         if ($id = $request->id) {
             $query = $query->where('id', '>=', $id);
         }
 
-        if ($p = $request->p) {
-            $query = $query->whereBetween('i_product_price', $p);
+        if ($request->p) {
+            $p = preg_split('~,~', $request->p);
+            if (empty($p[1])) {
+                $query = $query->where('i_product_price', '>=', $p[0]);
+            } else {
+                $query = $query->where('i_product_price', '<=', $p[1]);
+            }
         }
 
-        if ($a = $request->a) {
-            $query = $query->whereBetween('i_amount', $a);
+        if ($request->a) {
+            $a = preg_split('~,~', $request->a);
+
+            if (empty($a[1])) {
+                $query = $query->where('i_quantity', '>=', $a[0]);
+            } else {
+                $query = $query->where('i_quantity', '<=', $a[1]);
+            }
+
         }
 
-        if ($d = $request->d) {
-            $query = $query->whereBetween('i_date', $d);
+        if ($request->d) {
+            $d = preg_split('~,~', $request->d);
+            if (empty($d[1])) {
+                $query = $query->where('i_date', '>=', $d[0]);
+            } else {
+                $query = $query->where('i_date', '<=', $d[1]);
+            }
         }
 
-        if ($ed = $request->ed) {
-            $query = $query->whereBetween('i_mature', $ed);
+        if ($request->ed) {
+            $ed = preg_split('~,~', $request->ed);
+            if (empty($ed[1])) {
+                $query = $query->where('i_mature', '>=', $ed[0]);
+            } else {
+                $query = $query->where('i_mature', '<=', $ed[1]);
+            }
         }
 
         if($sortBy = $request->sortBy) {
