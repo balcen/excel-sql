@@ -110,17 +110,25 @@ class ClientsController extends Controller
 
     public function searchAll(Request $request)
     {
-        $q = urldecode($request->q);
         $itemsPerPage = $request->itemsPerPage;
-        $query = Client::where('c_tax_id', 'like', '%' . $q . '%')
-            ->orWhere('c_name', 'like', '%' . $q . '%')
-            ->orWhere('c_type', 'like', '%' . $q . '%')
-            ->orWhere('c_contact', 'like', '%' . $q . '%')
-            ->orWhere('c_phone', 'like', '%' . $q . '%')
-            ->orWhere('c_mail', 'like', '%' . $q . '%');
+        $query = Client::query();
+
+        if ($request->q) {
+            $q = urldecode($request->q);
+            $query = $query->where(function($qy) use ($q) {
+                $qy = $qy->where('c_tax_id', 'like', '%' . $q . '%')
+                    ->orWhere('c_name', 'like', '%' . $q . '%')
+                    ->orWhere('c_type', 'like', '%' . $q . '%')
+                    ->orWhere('c_contact', 'like', '%' . $q . '%')
+                    ->orWhere('c_phone', 'like', '%' . $q . '%')
+                    ->orWhere('c_mail', 'like', '%' . $q . '%');
+            });
+
+        }
         if ($id = $request->id) {
             $query = $query->where('id', '>=', $id);
         }
+
         $clients = $query->paginate($itemsPerPage);
         return response()->json($clients);
     }
