@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\api;
 
-use App\Client;
-use Carbon\Carbon;
+use App\Entities\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\ExcelFileUpload;
+use App\Repositories\Clients\ClientSearch;
+use App\Repositories\Clients\ClientResource;
 
 class ClientsController extends Controller
 {
@@ -25,13 +26,8 @@ class ClientsController extends Controller
      */
     public function index(Request $request)
     {
-        $itemsPerPage = $request->itemsPerPage;
-        $clients = Client::paginate($itemsPerPage);
-
-        return response()->json($clients);
-
-//        $clients = Client::all();
-//        return response()->json($clients);
+        return response()
+            ->json(ClientResource::index($request));
     }
 
     /**
@@ -42,11 +38,8 @@ class ClientsController extends Controller
      */
     public function store(Request $request)
     {
-        $client = $request->all();
-        $client['created_at'] = Carbon::now();
-        $client['updated_at'] = Carbon::now();
-        $result = Client::insert($client);
-        return response()->json(['result' => $result]);
+        return response()
+            ->json(ClientResource::store($request));
     }
 
     /**
@@ -57,11 +50,6 @@ class ClientsController extends Controller
      */
     public function show(Request $request, $id)
     {
-//        $client = Client::find($id);
-        $itemsPerPage = $request->itemsPerPage;
-        $clients = Client::where('id', '>=', $id)
-            ->paginate($itemsPerPage);
-        return response()->json($clients);
     }
 
     /**
@@ -73,9 +61,8 @@ class ClientsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $client = $request->all();
-        $result = Client::find($id)->update($client);
-        return response()->json(['result' => $result, 'status' => 'success']);
+        return response()
+            ->json(ClientResource::update($request, $id));
     }
 
     /**
@@ -86,16 +73,15 @@ class ClientsController extends Controller
      */
     public function destroy($id)
     {
-        $result = Client::find($id)->delete();
-        return response()->json(['result' => $result]);
+        return response()
+            ->json(ClientResource::destroy($id));
     }
 
 
     public function deleteAll(Request $request)
     {
-        $ids = explode(',', $request->ids);
-        $result = Client::whereIn('id', $ids)->delete();
-        return response()->json(['result'=>$result]);
+        return response()
+            ->json(ClientResource::batchDelete($request));
     }
 
     public function upload(Request $request)
@@ -110,26 +96,7 @@ class ClientsController extends Controller
 
     public function searchAll(Request $request)
     {
-        $itemsPerPage = $request->itemsPerPage;
-        $query = Client::query();
-
-        if ($request->q) {
-            $q = urldecode($request->q);
-            $query = $query->where(function($qy) use ($q) {
-                $qy = $qy->where('c_tax_id', 'like', '%' . $q . '%')
-                    ->orWhere('c_name', 'like', '%' . $q . '%')
-                    ->orWhere('c_type', 'like', '%' . $q . '%')
-                    ->orWhere('c_contact', 'like', '%' . $q . '%')
-                    ->orWhere('c_phone', 'like', '%' . $q . '%')
-                    ->orWhere('c_mail', 'like', '%' . $q . '%');
-            });
-
-        }
-        if ($id = $request->id) {
-            $query = $query->where('id', '>=', $id);
-        }
-
-        $clients = $query->paginate($itemsPerPage);
-        return response()->json($clients);
+        return response()
+            ->json(ClientSearch::apply($request));
     }
 }

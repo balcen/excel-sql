@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers\api;
 
-use App\Product;
+use App\Entities\Product;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\ExcelFileUpload;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Controllers\ExcelFileUpload;
+use App\Repositories\Products\ProductSearch;
+use App\Repositories\Products\ProductResource;
 
 class ProductsController extends Controller
 {
@@ -26,19 +28,8 @@ class ProductsController extends Controller
      */
     public function index(Request $request)
     {
-        $itemsPerPage = $request->itemsPerPage;
-        if ($sortBy = $request->sortBy) {
-            $sortDesc = $request->sortDesc;
-            $products = Product::orderBy($sortBy, $sortDesc)
-                ->paginate($itemsPerPage);
-        } else {
-            $products = Product::paginate($itemsPerPage);
-        }
-
-        return response()->json($products);
-
-//        $products = Product::all();
-//        return response()->json($products);
+        return response()
+            ->json(ProductResource::index($request));
     }
 
     /**
@@ -49,19 +40,16 @@ class ProductsController extends Controller
      */
     public function store(Request $request)
     {
-        $image = $request->file('image');
-        $product = json_decode($request->all()['item'], true);
-        $product['created_at'] = Carbon::now();
-        $product['updated_at'] = Carbon::now();
-        // if(isset($image)) {
-        //     $image = $request->file('image');
-        //     $imageName = '00_Image_'.uniqid().'.'.$image->getClientOriginalExtension();
-        //     $imageContent = file_get_contents($image);
-        //     $product['p_image'] = $imageName;
-        // }
-        $result = Product::insert($product);
-        // Storage::disk('pubic')->put($imageName, $imageContent);
-        return response()->json(['result'=>$result]);
+        return response()
+            ->json(ProductResource::store($request));
+
+//        $image = $request->file('image');
+//         if(isset($image)) {
+//             $image = $request->file('image');
+//             $imageName = '00_Image_'.uniqid().'.'.$image->getClientOriginalExtension();
+//             $imageContent = file_get_contents($image);
+//             $product['p_image'] = $imageName;
+//         }
     }
 
     /**
@@ -72,14 +60,6 @@ class ProductsController extends Controller
      */
     public function show(Request $request, $id)
     {
-        $itemsPerPage = $request->itemsPerPage;
-        $query = Product::where('id', '>=', $id);
-        if($sortBy = $request->sortBy) {
-            $sortDesc = $request->sortDesc;
-            $query = $query->orderBy($sortBy, $sortDesc);
-        }
-        $products= $query->paginate($itemsPerPage);
-        return response()->json($products);
     }
 
     /**
@@ -91,9 +71,8 @@ class ProductsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $product = $request->all();
-        $result = Product::find($id)->update($product);
-        return response()->json(['result'=>$result]);
+        return response()
+            ->json(ProductResource::update($request, $id));
     }
 
     /**
@@ -104,20 +83,18 @@ class ProductsController extends Controller
      */
     public function destroy($id)
     {
-        $product = Product::find($id);
+        return response()
+            ->json(ProductResource::destroy($id));
 //        $image = $product->value('p_image');
-        if($image = $product->value('p_image')) {
-            Storage::disk('public')->delete($product->value('p_image'));
-        }
-        $result = $product->delete();
-        return response()->json(['result' => $result]);
+//        if($image = $product->value('p_image')) {
+//            Storage::disk('public')->delete($product->value('p_image'));
+//        }
     }
 
     public function deleteAll(Request $request)
     {
-        $ids = explode(',', $request->ids);
-        $result = Product::whereIn('id', $ids)->delete();
-        return response()->json(['result'=>$result]);
+        return response()
+            ->json(ProductResource::batchDelete($request));
     }
 
     public function upload(Request $request)
@@ -136,46 +113,7 @@ class ProductsController extends Controller
 
     public function searchAll(Request $request)
     {
-        $itemsPerPage = $request->itemsPerPage;
-        $query = Product::query();
-
-
-        if ($request->q) {
-            $q = urldecode($request->q);
-            $query = $query->where(function($qy) use ($q) {
-                    $qy = $qy->where('p_type', 'like', '%' . $q . '%')
-                        ->orWhere('p_name', 'like', '%' . $q . '%')
-                        ->orWhere('p_part_no', 'like', '%' . $q . '%')
-                        ->orWhere('p_spec', 'like', '%' . $q . '%')
-                        ->orWhere('p_price', 'like', '%' . $q . '%')
-                        ->orWhere('p_currency', 'like', '%' . $q . '%')
-                        ->orWhere('p_size', 'like', '%' . $q . '%')
-                        ->orWhere('p_weight', 'like', '%' . $q . '%')
-                        ->orWhere('p_note', 'like', '%' . $q . '%');
-                });
-        }
-
-        if ($sortBy = $request->sortBy) {
-            $sortDesc = $request->sortDesc;
-            $query = $query->orderBy($sortBy, $sortDesc);
-        }
-
-        if ($id = $request->id) {
-            $query = $query->where('id', '>=', $id);
-        }
-
-        if ($request->p) {
-            $p = preg_split('~,~', $request->p);
-            if (!empty($p[0])) {
-                $query = $query->where('p_price', '>=', $p[0]);
-            }
-            if (!empty($p[1])) {
-                $query = $query->where('p_price', '<=', $p[1]);
-            }
-        }
-
-        $products = $query->paginate($itemsPerPage);
-
-        return response()->json($products);
+        return response()
+            ->json(ProductSearch::apply($request));
     }
 }
