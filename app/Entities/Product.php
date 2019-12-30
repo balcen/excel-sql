@@ -9,6 +9,8 @@ class Product extends Model
 {
     use HasUpsertQueries;
 
+    public $timestamps = true;
+
     protected $table = 'products';
 
     protected $fillable = [

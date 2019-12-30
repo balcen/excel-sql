@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers\api;
 
-use App\Entities\Client;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\ExcelFileUpload;
 use App\Repositories\Clients\ClientSearch;
@@ -86,12 +84,8 @@ class ClientsController extends Controller
 
     public function upload(Request $request)
     {
-        $file['file'] = $request->file('file');
-        $file['fileName'] = $request->file('file')->getClientOriginalName();
-        $excelData = $this->getExcelData($file,'clients');
-        Client::insert($excelData);
-        $id = DB::getPdo()->lastInsertId();
-        return response()->json(['id' => $id]);
+        return response()
+            ->json(['id' => ClientResource::upload($request)]);
     }
 
     public function searchAll(Request $request)

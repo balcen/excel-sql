@@ -2,10 +2,7 @@
 
 namespace App\Http\Controllers\api;
 
-use App\Entities\Product;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\ExcelFileUpload;
@@ -99,16 +96,8 @@ class ProductsController extends Controller
 
     public function upload(Request $request)
     {
-        try {
-            $file['file'] = $request->file('file');
-            $file['fileName'] = $request->file('file')->getClientOriginalName();
-            $excelData = $this->getExcelData($file, 'products');
-            Product::insert($excelData);
-            $id = DB::getPdo()->lastInsertId();
-        } catch (\Exception $e) {
-            return response()->json($e);
-        }
-        return response()->json(['id' => $id]);
+        return response()
+            ->json(['id' => ProductResource::upload($request)]);
     }
 
     public function searchAll(Request $request)

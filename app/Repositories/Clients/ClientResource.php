@@ -32,4 +32,9 @@ class ClientResource
     {
         return Crud\BatchDelete::apply(new Client, $request);
     }
+
+    public static function upload(Request $request)
+    {
+        return Crud\FileUpload::apply(new Client, $request);
+    }
 }

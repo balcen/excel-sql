@@ -19,7 +19,7 @@ class Type
         $columns = array_filter($array[0]);
         return [
             'type' => self::switchType($columns),
-            'length' => count($array),
+            'length' => count($array) - 1,
             'col' => count($columns)
         ];
     }
