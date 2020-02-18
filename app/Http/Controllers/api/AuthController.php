@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Requests\RegisterFormRequest;
+use Auth;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\RegisterFormRequest;
+use Illuminate\Auth\AuthenticationException;
 
 class AuthController extends Controller
 {
+
     public function __construct() {
         $this->middleware('auth:api', ['except' => ['login', 'refresh', 'register']]);
     }
@@ -25,7 +27,7 @@ class AuthController extends Controller
         } catch (\Exception $exception){
             return response([
                 'status' => $exception
-            ]);
+            ],500);
         }
         return response([
             'status' => 'success',
@@ -36,13 +38,26 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $credentials = request(['name', 'password']);
-
-        // attempt to verify the credential and create token for the user
-        if (! $token = auth('api')->attempt($credentials)) {
-            return response()->json(['error'=>'Unauthorized'], 401);
+        try {
+            //  attempt to verify the credential and create token for the user
+            if (! Auth::attempt($credentials)) {
+                return response()->json(['error'=>'Unauthorized'], 401);
+            }
+//            if (! auth('web')->attempt($credentials)) {
+//                return  response()->json(['error' => 'Unauthorized'], 401);
+//            }
+            $user = $request->user();
+            $token = $user->createToken('Personal Access Token');
+            return response()->json(['success' => 'success']);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'could_not_create_token'],500);
         }
+//        return $this->respondWithToken($token);
+//        return response()->json(['success'=>'success'])->cookie('token', $token, 30, null, null, false, false);
 
-        return $this->respondWithToken($token);
+
+        return response()->json(['token' => $respond]);
+
     }
 
     /**
