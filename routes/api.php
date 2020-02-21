@@ -22,10 +22,8 @@ Route::post('auth/register', 'api\AuthController@register');
 Route::post('auth/login', 'api\AuthController@login');
 Route::get('auth/user', 'api\AuthController@me');
 Route::post('auth/logout', 'api\AuthController@logout');
+Route::get('auth/refresh', 'api\AuthController@refresh');
 
-Route::middleware('jwt.refresh')->group(function() {
-    Route::get('auth/refresh', 'api\AuthController@refresh');
-});
 
 // Search
 Route::get('clients/search', 'api\ClientsController@searchAll');
