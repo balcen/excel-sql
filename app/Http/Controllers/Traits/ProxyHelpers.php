@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Traits;
 
 use Carbon\Carbon;
+use Illuminate\Validation\UnauthorizedException;
 
 trait ProxyHelpers
 {
@@ -34,25 +35,29 @@ trait ProxyHelpers
     {
         try {
             $this->attempt();
-            $token = $this->getToken();
-            $this->remember($token);
+//            if (auth()->check()) {
+                $token = $this->getToken();
+                $this->remember($token);
+//            } else {
+//                throw new UnauthorizedException('帳號密碼錯誤');
+//            }
             return $token;
         } catch (\Exception $e) {
-            return ['error' => $e];
+            return ['error' => $e->getMessage()];
         }
     }
 
     public function attempt()
     {
-        if (\Auth::attempt(request(['name', 'password']))) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+        if (!auth()->attempt(request(['name', 'password']))) {
+            throw new UnauthorizedException('帳號密碼錯誤');
         }
     }
 
     public function getToken()
     {
         return [
-            'access_token' =>request()->user()->createToken('Personal Access Token')->accessToken,
+            'token' =>request()->user()->createToken('Personal Access Token')->accessToken,
             'token_type' => 'Bearer'
             ];
     }

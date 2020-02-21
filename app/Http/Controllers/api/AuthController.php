@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\API;
 
-use App\User;
+use App\Entities\User;
 use Illuminate\Http\Request;
+use App\Repositories\Auth\AuthUser;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RegisterFormRequest;
 use App\Http\Controllers\Traits\ProxyHelpers;
@@ -13,27 +14,32 @@ class AuthController extends Controller
     use ProxyHelpers;
 
     public function __construct() {
-        $this->middleware('auth:api', ['except' => ['login', 'refresh', 'register']]);
+        $this->middleware('auth:api', ['except' => ['login', 'register']]);
     }
 
     public function register(RegisterFormRequest $request)
     {
-        try {
-            $user = new User([
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => bcrypt($request->password),
-            ]);
-            $user->save();
-        } catch (\Exception $exception){
-            return response([
-                'status' => $exception
-            ],500);
-        }
-        return response([
-            'status' => 'success',
-            'data' => $user
-        ], 200);
+//        try {
+//            $user = new User([
+//                'name' => $request->input('name'),
+//                'email' => $request->input('email'),
+//                'password' => bcrypt($request->input('password')),
+//            ]);
+//            $user->save();
+//        } catch (\Exception $exception){
+//            return response([
+//                'status' => $exception
+//            ],500);
+//        }
+//        return response([
+//            'status' => 'success',
+//            'data' => $user
+//        ], 200);
+        $response = new AuthUser($request);
+        return response()->json(
+            $response->message['message'],
+            $response->message['status']
+        );
     }
 
     public function login(Request $request)
@@ -84,12 +90,14 @@ class AuthController extends Controller
     /**
      * Log the user out (Invalidate the token).
      *
+     * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function logout()
+    public function logout(Request $request)
     {
-        auth()->logout();
-
+//        auth()->logout();
+//        auth('api')->logout();
+        $request->user()->token()->revoke();
         return response()->json(['message' => 'Successfully logged out']);
     }
 
