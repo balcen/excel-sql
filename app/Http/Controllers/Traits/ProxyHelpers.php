@@ -43,14 +43,15 @@ trait ProxyHelpers
 //            }
             return $token;
         } catch (\Exception $e) {
-            return ['error' => $e->getMessage()];
+//            return ['error' => $e->getMessage()];
+            throw new UnauthorizedException($e->getMessage());
         }
     }
 
     public function attempt()
     {
         if (!auth()->attempt(request(['name', 'password']))) {
-            throw new UnauthorizedException('帳號密碼錯誤');
+            throw new UnauthorizedException('Unauthorized');
         }
     }
 
