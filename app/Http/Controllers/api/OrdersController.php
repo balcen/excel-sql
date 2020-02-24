@@ -14,7 +14,7 @@ class OrdersController extends Controller
 
     public function __construct()
     {
-        $this->middleware('cors');
+        $this->middleware('auth:api');
     }
 
     /**

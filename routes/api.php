@@ -13,10 +13,6 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
 // Auth
 Route::post('auth/register', 'api\AuthController@register');
 Route::post('auth/login', 'api\AuthController@login');
@@ -24,17 +20,25 @@ Route::get('auth/user', 'api\AuthController@me');
 Route::post('auth/logout', 'api\AuthController@logout');
 Route::get('auth/refresh', 'api\AuthController@refresh');
 
-
 // Search
 Route::get('clients/search', 'api\ClientsController@searchAll');
 Route::get('products/search', 'api\ProductsController@searchAll');
 Route::get('orders/search', 'api\OrdersController@searchAll');
 Route::get('invoices/search', 'api\InvoicesController@searchAll');
 
-Route::delete('clientsDeleteAll', 'api\ClientsController@deleteAll');
-Route::delete('productsDeleteAll', 'api\ProductsController@deleteAll');
-Route::delete('ordersDeleteAll', 'api\OrdersController@deleteAll');
-Route::delete('invoicesDeleteAll', 'api\InvoicesController@deleteAll');
+// Delete As Array
+Route::delete('clients/deleteAll', 'api\ClientsController@deleteAll');
+Route::delete('products/deleteAll', 'api\ProductsController@deleteAll');
+Route::delete('orders/deleteAll', 'api\OrdersController@deleteAll');
+Route::delete('invoices/deleteAll', 'api\InvoicesController@deleteAll');
+
+Route::post('upload', 'api\UploadController@import');
+
+// Upload File
+Route::post('clients/upload', 'api\ClientsController@upload');
+Route::post('products/upload', 'api\ProductsController@upload');
+Route::post('orders/upload', 'api\OrdersController@upload');
+Route::post('invoices/upload', 'api\InvoicesController@upload');
 
 Route::resources([
     'clients' => 'api\ClientsController',
@@ -43,11 +47,5 @@ Route::resources([
     'invoices' => 'api\InvoicesController'
 ]);
 
-Route::post('upload', 'api\UploadController@import');
-
-Route::post('clients/upload', 'api\ClientsController@upload');
-Route::post('products/upload', 'api\ProductsController@upload');
-Route::post('orders/upload', 'api\OrdersController@upload');
-Route::post('invoices/upload', 'api\InvoicesController@upload');
 
 

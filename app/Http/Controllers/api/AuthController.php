@@ -73,8 +73,11 @@ class AuthController extends Controller
 //        return $this->respondWithToken($token);
 //        return response()->json(['success'=>'success'])->cookie('token', $token, 30, null, null, false, false);
 //        return response()->json(['token' => $respond]);
-
-        return response()->json($this->authenticate());
+        try {
+          return response()->json($this->authenticate());
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 401);
+        }
     }
 
     /**
