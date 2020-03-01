@@ -59,7 +59,9 @@ class Row
             }
             $excelData[$i]['created_at'] = Carbon::now();
             $excelData[$i]['updated_at'] = Carbon::now();
-            $excelDat[$i]['file_name'] = $fileName;
+            $excelData[$i]['file_name'] = $fileName;
+            // 儲存 User ID
+            $excelData[$i]['author'] = $request->user()->id;
             $i++;
         }
         return $excelData;

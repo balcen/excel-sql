@@ -29,7 +29,7 @@ class AuthUser
                 'password' => $this->password
             ]);
             $user->save();
-            $token = $user->createToken()->accessToken;
+            $token = $user->createToken('Access Token')->accessToken;
             $this->message = [
                 'status' => 200,
                 'message' => [
@@ -42,7 +42,7 @@ class AuthUser
         } catch (\Exception $e) {
             $this->message = [
                 'status' => 500,
-                'message' => ['status' => $e]
+                'message' => ['status' => $e->getMessage()]
             ];
         }
     }

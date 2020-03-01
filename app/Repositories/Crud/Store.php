@@ -9,6 +9,8 @@ class Store
 {
     public static function apply(Model $model, Request $request)
     {
-        return $model->newQuery()->create($request->all());
+        $arr = $request->all();
+        $arr['author'] = $request->user()->id;
+        return $model->newQuery()->create($arr);
     }
 }
