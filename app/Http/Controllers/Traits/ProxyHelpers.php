@@ -59,14 +59,14 @@ trait ProxyHelpers
     {
         return [
             'token' =>request()->user()->createToken('Personal Access Token')->accessToken,
-            'token_type' => 'Bearer'
+            'tokenType' => 'Bearer'
             ];
     }
 
     public function remember(&$token)
     {
-        if (request('remember_me')) {
-            $token['expires_at'] = Carbon::now()->addDay()->toDateString();
+        if (request('rememberMe')) {
+            $token['expiresAt'] = Carbon::now()->addDay()->toDateString();
         }
     }
 }
