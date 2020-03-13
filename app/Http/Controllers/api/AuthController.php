@@ -36,7 +36,6 @@ class AuthController extends Controller
 //            'data' => $user
 //        ], 200);
         $response = new AuthUser($request);
-        dd($response);
         return response()->json(
             $response->message['message'],
             $response->message['status']
