@@ -19,22 +19,6 @@ class AuthController extends Controller
 
     public function register(RegisterFormRequest $request)
     {
-//        try {
-//            $user = new User([
-//                'name' => $request->input('name'),
-//                'email' => $request->input('email'),
-//                'password' => bcrypt($request->input('password')),
-//            ]);
-//            $user->save();
-//        } catch (\Exception $exception){
-//            return response([
-//                'status' => $exception
-//            ],500);
-//        }
-//        return response([
-//            'status' => 'success',
-//            'data' => $user
-//        ], 200);
         $response = new AuthUser($request);
         return response()->json(
             $response->message['message'],
@@ -44,35 +28,6 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-//        $credentials = request(['name', 'password']);
-//        try {
-//            //  attempt to verify the credential and create token for the user
-//            if (! Auth::attempt($credentials)) {
-//                return response()->json(['error'=>'Unauthorized'], 401);
-//            }
-//            if (! auth('web')->attempt($credentials)) {
-//                return  response()->json(['error' => 'Unauthorized'], 401);
-//            }
-//            $user = $request->user();
-//            $tokenResult = $user->createToken('Personal Access Token');
-//            $token = $tokenResult->token;
-//
-//            if (request('remember_me')) {
-//               $expires_at = Carbon::now()->addDay();
-//            }
-//
-//            return response()->json([
-//                'access_token' => $tokenResult->accessToken,
-//                'token_type' => 'Bearer',
-//                'expires_at' => Carbon::parse($expires_at)->toDateString()
-//            ]);
-//
-//        } catch (\Exception $e) {
-//            return response()->json(['error' => 'could_not_create_token'],500);
-//        }
-//        return $this->respondWithToken($token);
-//        return response()->json(['success'=>'success'])->cookie('token', $token, 30, null, null, false, false);
-//        return response()->json(['token' => $respond]);
         try {
           return response()->json($this->authenticate());
         } catch (\Exception $e) {
