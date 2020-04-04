@@ -2,13 +2,9 @@
 
 namespace App\Entities;
 
-use Illuminate\Database\Eloquent\Model;
-use Staudenmeir\LaravelUpsert\Eloquent\HasUpsertQueries;
 
 class Product extends Model
 {
-    use HasUpsertQueries;
-
     public $timestamps = true;
 
     protected $table = 'products';
