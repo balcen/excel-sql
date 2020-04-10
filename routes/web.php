@@ -12,5 +12,5 @@
 */
 
 Route::get('{any}', function () {
-    return view('welcome');
+    return view('errors/404');
 })->where("any", ".*");
