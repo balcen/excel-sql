@@ -22,7 +22,7 @@ class Order extends Model
         'o_quantity',
         'o_amount',
         'o_note',
-        'author',
+        'user_id',
         'file_name'
     ];
 

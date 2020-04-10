@@ -48,14 +48,11 @@ class BaseTableController extends Controller
 
     public function upload(Request $request)
     {
+        return response()->json($this->service->upload($request));
     }
 
-    public function searchAll(Request $request)
+    public function search(Request $request)
     {
-    }
-
-    private function sortInit()
-    {
-
+        return response()->json($this->service->search($request));
     }
 }

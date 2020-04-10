@@ -13,7 +13,11 @@ class Index
     public static function apply(Model $model, Request $request)
     {
         $builder = $model->newQuery();
-        if ($request->sortBy) Sort::apply($builder, $request);
+        if (!is_null($request->query('sortBy'))) Sort::apply($builder, $request);
+        if ($request->user()->permission < 4) {
+            $builder->where('author', $request->user()->id)
+                ->orWhere('author', null);
+        }
         return Paginate::apply($builder, $request);
     }
 }

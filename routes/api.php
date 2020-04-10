@@ -21,16 +21,16 @@ Route::post('auth/logout', 'api\AuthController@logout');
 Route::get('auth/refresh', 'api\AuthController@refresh');
 
 // Search
-Route::get('clients/search', 'api\ClientsController@searchAll');
-Route::get('products/search', 'api\ProductsController@searchAll');
-Route::get('orders/search', 'api\OrdersController@searchAll');
-Route::get('invoices/search', 'api\InvoicesController@searchAll');
+Route::get('clients/search', 'api\ClientsController@search');
+Route::get('products/search', 'api\ProductsController@search');
+Route::get('orders/search', 'api\OrdersController@search');
+Route::get('invoices/search', 'api\InvoicesController@search');
 
 // Delete As Array
-Route::delete('clients/deleteAll', 'api\ClientsController@deleteAll');
-Route::delete('products/deleteAll', 'api\ProductsController@deleteAll');
-Route::delete('orders/deleteAll', 'api\OrdersController@deleteAll');
-Route::delete('invoices/deleteAll', 'api\InvoicesController@deleteAll');
+Route::delete('clients/delete', 'api\ClientsController@batchDelete');
+Route::delete('products/deleteAll', 'api\ProductsController@batchDelete');
+Route::delete('orders/deleteAll', 'api\OrdersController@batchDelete');
+Route::delete('invoices/deleteAll', 'api\InvoicesController@BatchDelete');
 
 Route::post('upload', 'api\UploadController@import');
 

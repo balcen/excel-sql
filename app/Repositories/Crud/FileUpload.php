@@ -9,12 +9,12 @@ use Illuminate\Http\Request;
 
 class FileUpload
 {
-    public static function apply(Model $model, Request $request)
+    public function apply(Model $model, Request $request)
     {
-        return static::insertRow($model, $request);
+        return $this->insertRow($model, $request);
     }
 
-    private static function insertRow(Model $model, Request $request)
+    private function insertRow(Model $model, Request $request)
     {
         $data = Row::apply($model, $request);
         $model::query()->insert($data);

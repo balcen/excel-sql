@@ -20,7 +20,7 @@ class Product extends Model
         'p_size',
         'p_weight',
         'p_note',
-        'author',
+        'user_id',
         'file_name'
     ];
 

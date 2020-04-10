@@ -16,7 +16,7 @@ class Client extends Model
         'c_contact',
         'c_phone',
         'c_mail',
-        'author',
+        'user_id',
         'file_name'
     ];
 }

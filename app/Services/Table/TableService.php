@@ -2,8 +2,10 @@
 
 namespace App\Services\Table;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use App\Services\ExcelService;
+use App\Services\SearchService;
+use Illuminate\Database\Eloquent\Model;
 
 abstract class TableService
 {
@@ -19,8 +21,6 @@ abstract class TableService
 
     abstract function model();
 
-    abstract function getColumn();
-
     public function index(Request $request)
     {
         $query = $this->model->newQuery();
@@ -31,8 +31,8 @@ abstract class TableService
         }
 
         if ($request->user()->permission < 4) {
-            $query->where('author', $request->user()->id)
-                ->orWhere('author', null);
+            $query->where('user_id', $request->user()->id)
+                ->orWhere('user_id', null);
         }
         return $query->paginate($request->query('itemsPerPage'));
     }
@@ -66,9 +66,16 @@ abstract class TableService
 
     public function upload(Request $request)
     {
+        $excelService = new ExcelService($this->columns);
+        $data = $excelService->getData($request);
+        $this->model::query()->insert($data);
+        return ["id" => $this->model->getConnection()->getPdo()->lastInsertId()];
     }
 
-    public function searchAll(Request $request)
+    public function search(Request $request)
     {
+        $searchService = new SearchService($this->model);
+        $data = $searchService->getData($request);
+        return $data->paginate($request->query("itemsPerPage"));
     }
 }

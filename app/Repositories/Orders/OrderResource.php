@@ -35,6 +35,6 @@ class OrderResource
 
     public static function upload(Request $request)
     {
-        return Crud\FileUpload::apply(new Order, $request);
+        return (new Crud\FileUpload)->apply(new Order, $request);
     }
 }

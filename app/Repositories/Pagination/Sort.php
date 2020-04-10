@@ -16,8 +16,8 @@ class Sort
     private static function applyDecorations(Request $request)
     {
         return [
-            'sortBy' => $request->sortBy[0],
-            'sortDesc' => $request->sortDesc[0] === "true" ? 'desc' : 'asc'
+            'sortBy' => $request->query('sortBy')[0],
+            'sortDesc' => $request->query('sortDesc')[0] === "true" ? 'desc' : 'asc'
         ];
     }
 }

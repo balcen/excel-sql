@@ -24,7 +24,7 @@ class Invoice extends Model
         'i_quantity',
         'i_amount',
         'i_note',
-        'author',
+        'user_id',
         'file_name'
     ];
 

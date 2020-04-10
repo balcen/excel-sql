@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repositories\FIle;
+namespace App\Repositories\File;
 
 use Illuminate\Http\Request;
 use PhpOffice\PhpSpreadsheet\IOFactory;
@@ -27,7 +27,7 @@ class Type
     private static function getWorkSheet(Request $request)
     {
         try {
-            return IOFactory::load($request->file)->getActiveSheet()->toArray();
+            return IOFactory::load($request->file())->getActiveSheet()->toArray();
         } catch (Exception $e) {
             return $e->getMessage();
         } catch (\PhpOffice\PhpSpreadsheet\Exception $e) {

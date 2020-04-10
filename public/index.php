@@ -20,9 +20,10 @@ if (! function_exists('dd')) {
      */
     function dd(...$args)
     {
-        header('Access-Control-Allow-Origin: *');
+        header('Access-Control-Allow-Origin: http://localhost:8080');
         header('Access-Control-Allow-Methods: *');
         header('Access-Control-Allow-Headers: *');
+        header('Access-Control-Allow-Credentials: true');
         http_response_code(500);
 
         foreach ($args as $x) {
