@@ -28,9 +28,9 @@ Route::get('invoices/search', 'api\InvoicesController@search');
 
 // Delete As Array
 Route::delete('clients/delete', 'api\ClientsController@batchDelete');
-Route::delete('products/deleteAll', 'api\ProductsController@batchDelete');
-Route::delete('orders/deleteAll', 'api\OrdersController@batchDelete');
-Route::delete('invoices/deleteAll', 'api\InvoicesController@BatchDelete');
+Route::delete('products/delete', 'api\ProductsController@batchDelete');
+Route::delete('orders/delete', 'api\OrdersController@batchDelete');
+Route::delete('invoices/delete', 'api\InvoicesController@batchDelete');
 
 Route::post('upload', 'api\UploadController@import');
 
