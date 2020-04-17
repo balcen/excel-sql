@@ -22,8 +22,14 @@ class ExcelService
     {
         try {
             $file = $request->file('file');
+            $fileName = $file->getClientOriginalName();
+            $id = $request->user()->id;
+            $time = Carbon::now();
             $sheet = IOFactory::load($file)->getActiveSheet();
-            $header_count = count($this->header);
+            if ($sheet->getHighestDataRow() > 500) {
+                return ["error" => "超過 500 筆資料"];
+            }
+            $headerCount = count($this->header);
 
             $result = [];
             $i = 0;
@@ -31,27 +37,36 @@ class ExcelService
                 if ($i < $sheet->getHighestDataRow() - 1) {
                     $j = 0;
                     foreach ($row->getCellIterator() as $cell) {
-                        if ($j < $header_count) {
+                        if ($j < $headerCount) {
                             $cellValue = $cell->getCalculatedValue();
                             if ($cellValue instanceof RichText) {
                                 $cellValue = $cellValue->getPlainText();
                             }
-                            if ($j == 1 &&  $header_count == 12 || $j == 1 && $header_count == 14 || $j == 2 && $header_count == 14) {
+                            if ($headerCount == 12 && $j == 1) {
+                                $cellValue = Date::excelToDateTimeObject($cellValue);
+                            }
+                            if ($headerCount == 14 && ($j == 1 || $j == 2)) {
                                 $cellValue = Date::excelToDateTimeObject($cellValue);
                             }
                             $result[$i][$this->header[$j++]] = $cellValue;
                         }
                     }
-                    $result[$i]['user_id'] = $request->user()->id;
-                    $result[$i]['file_name'] = $file->getClientOriginalName();
-                    $result[$i]['created_at'] = Carbon::now();
-                    $result[$i]['updated_at'] = Carbon::now();
+                    $result[$i]['user_id'] = $id;
+                    $result[$i]['file_name'] = $fileName;
+                    $result[$i]['created_at'] = $time;
+                    $result[$i]['updated_at'] = $time;
                     $i++;
                 }
             }
+            dd($result);
             return $result;
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
         }
+    }
+
+    public function getDataFromSpout()
+    {
+
     }
 }

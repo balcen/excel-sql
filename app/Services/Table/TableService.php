@@ -68,6 +68,9 @@ abstract class TableService
     {
         $excelService = new ExcelService($this->columns);
         $data = $excelService->getData($request);
+        if (isset($data['error'])) {
+            return ['error' => $data['error']];
+        }
         $this->model::query()->insert($data);
         return ["id" => $this->model->getConnection()->getPdo()->lastInsertId()];
     }

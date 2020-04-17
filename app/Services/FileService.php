@@ -15,6 +15,9 @@ class FileService
         try {
             $data = IOFactory::load($request->file('file'))->getActiveSheet()->toArray();
             $num = count(array_filter($data[0]));
+            if (count($data) > 501) {
+                return ['error' => '上傳檔案不能超過 500 筆'];
+            }
             return [
                 'type' => $this->types[$num] ?? 'none',
                 'rows_num' => count($data) - 1,
